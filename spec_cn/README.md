@@ -32,7 +32,7 @@ This is an unofficial draft, posted here for convenience. When we submit a C# 6.
     * [Member access | 成员访问](basic-concepts.md#member-access)
     * [Signatures and overloading | 签名与重载](basic-concepts.md#signatures-and-overloading)
     * [Scopes | 范围](basic-concepts.md#scopes)
-    * [Namespace and type names | 命名空间与类型名](basic-concepts.md#namespace-and-type-names)
+    * [Namespace and type names | 名称空间与类型名](basic-concepts.md#namespace-and-type-names)
     * [Automatic memory management | 自动内存管理](basic-concepts.md#automatic-memory-management)
     * [Execution order | 执行顺序](basic-concepts.md#execution-order)
 * [Types | 类型](types.md)

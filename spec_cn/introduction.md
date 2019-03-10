@@ -2,7 +2,7 @@
 
 C# (pronounced "See Sharp") is a simple, modern, object-oriented, and type-safe programming language. C# has its roots in the C family of languages and will be immediately familiar to C, C++, and Java programmers. C# is standardized by ECMA International as the ***ECMA-334*** standard and by ISO/IEC as the ***ISO/IEC 23270*** standard. Microsoft's C# compiler for the .NET Framework is a conforming implementation of both of these standards.
 
-C#（读作“See Sharp”）是一门简单、现代、面向对象且类型安全的编程语言。C#植根于C系语言家族，可以被C、C++和Java程序员迅速掌握。C#被ECMA International标准化为***ECMA-334***标准；被ISO/IEC标准化为***ISO/IEC 23270***标准。微软的C#编译器如实地实现了这两个标准。
+C#（读作“See Sharp”）是一门简单、现代、面向对象且类型安全的编程语言。C#植根于C系语言家族，可以被C、C++和Java程序员迅速掌握。C#被ECMA International标准化为**ECMA-334**标准；被ISO/IEC标准化为**ISO/IEC 23270**标准。微软的C#编译器如实地实现了这两个标准。
 
 <!--
 1. 广告做的不错！2. 直译“微软的C#编译器是符合这两个标准的一个实现”——过于欧化。3. 标准化还是很厉害的，比Java目光长远。
@@ -10,29 +10,50 @@ C#（读作“See Sharp”）是一门简单、现代、面向对象且类型安
 
 C# is an object-oriented language, but C# further includes support for ***component-oriented*** programming. Contemporary software design increasingly relies on software components in the form of self-contained and self-describing packages of functionality. Key to such components is that they present a programming model with properties, methods, and events; they have attributes that provide declarative information about the component; and they incorporate their own documentation. C# provides language constructs to directly support these concepts, making C# a very natural language in which to create and use software components.
 
-C#是面向对象的语言，但C#还进一步支持***面向组件***（component-oriented）编程。当今的软件设计越来越多地依赖在以自包含（self-contained）和自描述（self-describing）的功能包为形式的软件组件上。这些组件的关键之处在于，它们能够以属性（properties）、方法（methods）和事件（events）来呈现一个编程模型（programming model）；它们拥有用来提供与组件相关的声明性信息的特征（attributes）；并且它们还能囊括自己的文档???。C#提供了用以直接支持这些概念的语言结构，所以，C#是一门在创建和使用软件组件方面十分自然的语言。
+C#是面向对象的语言，但C#还进一步支持**面向组件**（component-oriented）编程。当今的软件设计越来越多地依赖在以自包含（self-contained）和自描述（self-describing）的功能包为形式的软件组件上。这些组件的关键之处在于，它们能够以属性（properties）、方法（methods）和事件（events）来呈现一个编程模型（programming model）；它们拥有用来提供与组件相关的声明性信息的特征（attributes）；并且它们还能囊括自己的文档???。C#提供了用以直接支持这些概念的语言结构，所以，C#是一门在创建和使用软件组件方面十分自然的语言。
 
 <!--1. Contemporary，当今的。2. in the form of，以...的形式。3. 当今的软件设计越来越多地依赖软件组件，所谓“组件”，就是以自包含（self-contained）和自描述（self-describing）的功能包。4. present，呈现，表达，表示。5. 从单复数上来看，表示的意思应该是“一个编程模型是由多个组件构成的”，而且，一个组件看起来有点像一个类。或者说，C#中的类就是一个组件，是相对于其他编程语言中的类的升级品。6. incorporate???，包括？不好译。-->
 
 Several C# features aid in the construction of robust and durable applications: ***Garbage collection*** automatically reclaims memory occupied by unused objects; ***exception handling*** provides a structured and extensible approach to error detection and recovery; and the ***type-safe*** design of the language makes it impossible to read from uninitialized variables, to index arrays beyond their bounds, or to perform unchecked type casts.
 
-C#的一些功能有助于构建健壮和耐久的应用程序：***垃圾收集***（garbage collection）会自动回收那些被闲置对象所占用的内存；***异常处理***（exception handling）提供了一个结构化、可扩展的方式用来探测错误并从错误中恢复；***类型安全***（type-safe）这项语言设计使得我们不可能访问未初始化的变量或者访问超出数组边界的索引，也不可能进行不经检验的类型转换。
+C#的一些功能有助于构建健壮和耐久的应用程序：*垃圾收集*（garbage collection）会自动回收那些被闲置对象所占用的内存；*异常处理*（exception handling）提供了一个结构化、可扩展的方式用来探测错误并从错误中恢复；*类型安全*（type-safe）这项语言设计使得我们不可能访问未初始化的变量或者访问超出数组边界的索引，也不可能进行不经检验的类型转换。
 
 <!--1. unused，未被使用的==闲置的。2. 这个it经常不太好直译。3. cast里面有不少“文化意味”的。-->
 
 C# has a ***unified type system***. All C# types, including primitive types such as `int` and `double`, inherit from a single root `object` type. Thus, all types share a set of common operations, and values of any type can be stored, transported, and operated upon in a consistent manner. Furthermore, C# supports both user-defined reference types and value types, allowing dynamic allocation of objects as well as in-line storage of lightweight structures.
 
-C#拥有***统一类型系统***（unified type system）。所有C#的类型，包括诸如`int`和`double`等的原始类型（primitive types），都继承自单一的根——`object`类型。因此，所有类型都会享有一组共同的操作，以致于任何类型的值都可以以一种一致的方式来存储、传输和操作。此外，C#还支持用户定义的引用类型（reference types）和值类型（value types）——既允许动态地分配对象，也允许轻量级结构体的就地（in-line）存储???。
+C#拥有**统一类型系统**（unified type system）。所有C#的类型，包括诸如`int`和`double`等原始类型（primitive types），都继承自单一的根——`object`类型。因此，所有类型都会享有一组共同的操作，以致于任何类型的值都可以以一种一致的方式来存储、传输和操作。此外，C#还支持用户定义的引用类型（reference types）和值类型（value types）——既允许动态地分配对象，也允许轻量级结构体的就地（in-line）存储???。
 
 <!--1. type，类型，口述的时候可以说“数据类型”，译的时候还是不要乱讲的好。2. 人家Java中的int和double才叫“原始”，C#里的已经太高级了好不好……这明显是带有广告意味。3. manner，方式，比较口语化的一个词。4. in-line，就地。5. 最后一句原文啥意思？得去跟作者确认……-->
 
 To ensure that C# programs and libraries can evolve over time in a compatible manner, much emphasis has been placed on ***versioning*** in C#'s design. Many programming languages pay little attention to this issue, and, as a result, programs written in those languages break more often than necessary when newer versions of dependent libraries are introduced. Aspects of C#'s design that were directly influenced by versioning considerations include the separate `virtual` and `override` modifiers, the rules for method overload resolution, and support for explicit interface member declarations.
 
+为了保证C#的程序和库在随着时间不断进化的同时仍然能够保持向前兼容，C#的设计在*版本控制*（versioning）方面可谓下足了工夫。许多编程语言在这一点上并不很在意，所以，作为结果，当引入由语言的新版本所编写的依赖库时，程序就会遇到更多的、本不必要的问题。对版本控制的考虑直接影响了C#语言设计的诸多方面，包括将`virtual`和`override`修饰符分离、方法重载的解析规则、和显式的接口成员声明。
+
+<!--1. "为了保证C#程序和库能够以兼容的方式随着时间不断进化，"译法生硬。2. "将`virtual`和`override`修饰符分离"这话明显是冲着Java来的。3. 一时还理解不了这与版本有什么关系。-->
+
 The rest of this chapter describes the essential features of the C# language. Although later chapters describe rules and exceptions in a detail-oriented and sometimes mathematical manner, this chapter strives for clarity and brevity at the expense of completeness. The intent is to provide the reader with an introduction to the language that will facilitate the writing of early programs and the reading of later chapters.
 
-## Hello world
+本章的剩余部分将会描述C#语言那些最根本的功能。尽管后面的章节会（针对这些功能）在规则和特例方面进行细致入微的阐述，有些时候还会引入数学的方式，本章则（以牺牲一定的细节作为代价）以清晰而简明的方式力保（对C#语言介绍的）完整性。
+
+<!--反正也不是用来出版的，我就照顾语义通顺吧！文章是给人用来读和理解的。怕挨骂就不要做翻译好了。-->
+
+## Hello world | Hello World
 
 The "Hello, World" program is traditionally used to introduce a programming language. Here it is in C#:
+
+“Hello, World”程序一直以来就被用来介绍编程语言。这里是它的C#版本：
+
+```csharp
+using System;
+
+class Hello
+{
+    static void Main() {
+        Console.WriteLine("Hello, World");
+    }
+}
+```
 
 ```csharp
 using System;
@@ -54,11 +75,34 @@ which produces an executable assembly named `hello.exe`. The output produced by 
 Hello, World
 ```
 
+C#的源文件（source files）一般都会使用`.cs`作为文件的扩展名。假设这个“Hello, World”程序被存储在名为`hello.cs`的文件中，那么这个程序可以被微软的C#编译器以如下命令进行编译：
+```
+csc hello.cs
+```
+并产生一个名为`hello.exe`的可执行的程序集（assembly）。当我们运行这个应用程序的时候，它产生的输出是：
+```
+Hello, World
+```
+
+<!--从上下文中可以清楚地看出，program指的是“代码阶段的程序”，而application指的是编译后、可执行的“应用程序”。-->
+
 The "Hello, World" program starts with a `using` directive that references the `System` namespace. Namespaces provide a hierarchical means of organizing C# programs and libraries. Namespaces contain types and other namespaces—for example, the `System` namespace contains a number of types, such as the `Console` class referenced in the program, and a number of other namespaces, such as `IO` and `Collections`. A `using` directive that references a given namespace enables unqualified use of the types that are members of that namespace. Because of the `using` directive, the program can use `Console.WriteLine` as shorthand for `System.Console.WriteLine`.
+
+“Hello, World”程序以`using`指令开头，这个指令引用了`System`名称空间。名称空间（namespaces）提供了一种层级的方式来管理C#的程序和库。名称空间里可以包含类型和其他（子）名称空间。例如，`System`包含了许多类型（譬如程序中所引用的`Console`类）和许多（子）名称空间（譬如`IO`和`Collections`）。引用了给定名称空间的`using`指令使得这个名称空间中的类型可以以非限定（unqualified）的方式进行使用。举例而言，因为有了程序开头的`using`指令，原本的`System.Console.WriteLine`就可以以`Console.WriteLine`的简写方式来使用。
+
+<!--1. 把namespace译为“名称空间”而不是“命名空间”是因为最早就接受了这种译法，改不了了！2.注意：一开头的using不是语句，而是“指令”，这个很多人没意识到。3. means，译为“手段”。例：by means of，以什么手段。4.shorthand，速记-->
 
 The `Hello` class declared by the "Hello, World" program has a single member, the method named `Main`. The `Main` method is declared with the `static` modifier. While instance methods can reference a particular enclosing object instance using the keyword `this`, static methods operate without reference to a particular object. By convention, a static method named `Main` serves as the entry point of a program.
 
+被“Hello, World”程序声明的`Hello`类拥有唯一的一个成员——名为`Main`的方法。`Main`方法被声明的时候带有`static`修饰符。静态方法（static methods）无需引用具体的对象就能运作，而实例方法（instance methods）可以使用`this`关键字来引用一个特定的、包含之的实例对象。按照约定，名为`Main`的静态方法将作为程序的入口点。
+
+<!--1. 翻译完这段，我可以肯定地说：语言文档绝壁不是给新手读的——术语太多了，而这些术语要么已经被教过，要么已经在其他语言的学习中有所了解。2. this和static这段描述，英文原文有点儿烂。-->
+
 The output of the program is produced by the `WriteLine` method of the `Console` class in the `System` namespace. This class is provided by the .NET Framework class libraries, which, by default, are automatically referenced by the Microsoft C# compiler. Note that C# itself does not have a separate runtime library. Instead, the .NET Framework is the runtime library of C#.
+
+程序的输出由`System`名称空间中的`Console`类的`WriteLine`方法所产生。这个类由.NET Framework的类库所提供。.NET Framework类库会被微软C#编译器自动引用。注意，C#语言本身并没有独立的运行时库（???哪个语言有？）。取而代之的是，.NET Framework就是C#的运行时库。
+
+<!--当还有没完全理解的描述时，说明自己还没有透彻理解C#这门语言。-->
 
 ## Program structure
 
