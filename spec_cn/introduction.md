@@ -104,9 +104,13 @@ The output of the program is produced by the `WriteLine` method of the `Console`
 
 <!--当还有没完全理解的描述时，说明自己还没有透彻理解C#这门语言。-->
 
-## Program structure
+## Program structure | 程序的结构
 
 The key organizational concepts in C# are ***programs***, ***namespaces***, ***types***, ***members***, and ***assemblies***. C# programs consist of one or more source files. Programs declare types, which contain members and can be organized into namespaces. Classes and interfaces are examples of types. Fields, methods, properties, and events are examples of members. When C# programs are compiled, they are physically packaged into assemblies. Assemblies typically have the file extension `.exe` or `.dll`, depending on whether they implement ***applications*** or ***libraries***.
+
+C#语言与代码组织性相关的概念中，最关键的包括**程序**（programs）、**名称空间**（namespaces）、**类型**（types）、**成员**（members）和**程序集**（assemblies）。C#程序由一个或多个源文件（source files）构成。程序能够声明类型，类型可以包含成员，而且类型可以被组织进名称空间中。类型的例子有：类（classes）和接口（interfaces）。成员的例子有：字段（fieled）、方法（methods）、属性（properties）和事件（events）。C#的程序被编译之后，（编译结果）会被物理性地打包进程序集中。程序集一般都会以`.exe`或`.dll`作为文件扩展名。使用`.exe`还是`.dll`作为扩展名取决于（编译）是**应用程序**（applications）还是**库**（libraries）。
+
+<!--1. "**程序**（programs）是C#组织性概念中的关键。"这么译，文档就废了。-->
 
 The example
 
@@ -150,7 +154,54 @@ csc /t:library acme.cs
 ```
 compiles the example as a library (code without a `Main` entry point) and produces an assembly named `acme.dll`.
 
+示例
+
+```csharp
+using System;
+
+namespace Acme.Collections
+{
+    public class Stack
+    {
+        Entry top;
+
+        public void Push(object data) {
+            top = new Entry(top, data);
+        }
+
+        public object Pop() {
+            if (top == null) throw new InvalidOperationException();
+            object result = top.data;
+            top = top.next;
+            return result;
+        }
+
+        class Entry
+        {
+            public Entry next;
+            public object data;
+
+            public Entry(Entry next, object data) {
+                this.next = next;
+                this.data = data;
+            }
+        }
+    }
+}
+```
+
+在名为`Acme.Collections`的名称空间中声明了一个名为`Stack`的类。这个类的全限定名（fully qualified name）是`Acme.Collections.Stack`。这个类包含了若干个成员：一个名为`top`的字段，两个分别名为`Push`和`Pop`的方法，和一个名为`Entry`的嵌套类。进而，`Entry`类也包含自己的三个成员：一个名为`next`的字段，一个名为`data`的字段和一个构造器（constructor）。假设这个示例的源代码被存储在名为`acme.cs`的文件中，则命令行
+
+```
+csc /t:library acme.cs
+```
+会把示例代码编译为一个库（没有`Main`入口点的代码）并且产生一个名为`acme.dll`的程序集。
+
+<!--1. "没有`Main`入口点的代码"这里明显有个误导，因为有`Main`方法的代码也可以被 /t:library 指令编译成库。-->
+
 Assemblies contain executable code in the form of ***Intermediate Language*** (IL) instructions, and symbolic information in the form of ***metadata***. Before it is executed, the IL code in an assembly is automatically converted to processor-specific code by the Just-In-Time (JIT) compiler of .NET Common Language Runtime.
+
+程序集中包含了以**中间代码**（Intermediate Language，简称 IL）形式的可执行代码和**元数据**（metadata）形式的描述性信息???。在程序集执行之前，中间语言代码会被.NET通用语言运行时（Common Language Runtime，简称CLR）中的即时（Just-In-Time，简称JIT）编译器自动转换为面向特定处理器的代码。
 
 Because an assembly is a self-describing unit of functionality containing both code and metadata, there is no need for `#include` directives and header files in C#. The public types and members contained in a particular assembly are made available in a C# program simply by referencing that assembly when compiling the program. For example, this program uses the `Acme.Collections.Stack` class from the `acme.dll` assembly:
 
@@ -183,7 +234,44 @@ This creates an executable assembly named `test.exe`, which, when run, produces 
 10
 1
 ```
+
+因为程序集是一个既包含代码又包含元数据的、自描述的（self-describing）功能单元，所以C#不需要使用`#include`指令和头文件。对于指定的程序集，只要在编译程序的时候引用这个程序集，那么这个程序集当中的公开（public）类型和成员就能够被访问。例如，下面这个程序用到了`acme.dll`程序集中的`Acme.Collections.Stack`类：
+
+```csharp
+using System;
+using Acme.Collections;
+
+class Test
+{
+    static void Main() {
+        Stack s = new Stack();
+        s.Push(1);
+        s.Push(10);
+        s.Push(100);
+        Console.WriteLine(s.Pop());
+        Console.WriteLine(s.Pop());
+        Console.WriteLine(s.Pop());
+    }
+}
+```
+假设程序被存储在文件`test.cs`中，那么当编译`test.cs`的时候，可以使用编译器的`/r`选项来引用`acme.dll`程序集：
+
+```
+csc /r:acme.dll test.cs
+```
+这样就会产生一个名为`test.exe`的可执行的程序集。当这个程序集运行的时候，就会产生输出：
+
+```
+100
+10
+1
+```
+
 C# permits the source text of a program to be stored in several source files. When a multi-file C# program is compiled, all of the source files are processed together, and the source files can freely reference each other—conceptually, it is as if all the source files were concatenated into one large file before being processed. Forward declarations are never needed in C# because, with very few exceptions, declaration order is insignificant. C# does not limit a source file to declaring only one public type nor does it require the name of the source file to match a type declared in the source file.
+
+C#允许程序的源文本（source text）存储在多个源文件中，而且这些源文件可以自由地互相引用。当一个多文件程序被编译的时候，所有源文件会被一起处理——概念上来说，就如同在编译前先把这些源文件连接成一个大文件，再进行处理。C#也从来不需要前置声明（forward declarations），因为声明顺序无关紧要（除了极少数例外情况）。C#既不限制一个源文件中只能声明一个公开类型，也不要求源文件必需与声明在其中的类型在名字上保持一致。
+
+<!--快把人家C/C++和Java黑出翔来了……-->
 
 ## Types and variables
 
