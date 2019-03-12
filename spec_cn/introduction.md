@@ -273,11 +273,19 @@ C#允许程序的源文本（source text）存储在多个源文件中，而且�
 
 <!--快把人家C/C++和Java黑出翔来了……-->
 
-## Types and variables
+## Types and variables | 类型与变量
 
 There are two kinds of types in C#: ***value types*** and ***reference types***. Variables of value types directly contain their data whereas variables of reference types store references to their data, the latter being known as objects. With reference types, it is possible for two variables to reference the same object and thus possible for operations on one variable to affect the object referenced by the other variable. With value types, the variables each have their own copy of the data, and it is not possible for operations on one to affect the other (except in the case of `ref` and `out` parameter variables).
 
+C#语言有两种类型——**值类型**（value types）和**引用类型**（reference types）。值类型的变量里直接容纳着数据，而引用类型的变量里则容纳的是对数据（也就是对象）的引用。当使用引用类型的时候，可以让两个变量引用同一个对象，这样，施加在一个变量上的操作就会影响到另一个变量所引用的对象。当使用值类型的时候，每个变量都拥有属于自己的一份对数据的拷贝，因此，也不可能发生操作一个变量会影响到另一个变量的情况（`ref`和`out`参数是例外）。
+
+<!--1.其实应该译为“数据类型”，但有感觉画蛇添足。2.那么，值类型的“data”是不是对象？-->
+
 C#'s value types are further divided into ***simple types***, ***enum types***, ***struct types***, and ***nullable types***, and C#'s reference types are further divided into ***class types***, ***interface types***, ***array types***, and ***delegate types***.
+
+C#的值类型可以进一步细分为**简单类型**（simple types）、**枚举类型**（enum types）、**结构体类型**（struct types）和**可空类型**（nullable types）。C#的引用类型则可进一步细分为**类类型**（class types）、**接口类型**（interface types）、**数组类型**（array types）和**委托类型**（delegate types）。
+
+<!--1.What??数组类型和委托类型难道不是类类型吗？我怀疑我翻译到了一份假的语言文档……-->
 
 The following table provides an overview of C#'s type system.
 
