@@ -307,15 +307,45 @@ The following table provides an overview of C#'s type system.
 |                 | Array types     | Single- and multi-dimensional, for example, `int[]` and `int[,]` |
 |                 | Delegate types  | User-defined types of the form e.g. `delegate int  D(...)` |
 
+下表提供了一个对C#类型的概览。
+
+| __分类__    |                 | __描述__ |
+|-----------------|-----------------|-----------------|
+| 值类型     | 简单类型   | 有符号整数： `sbyte`、 `short`、 `int`、 `long` |
+|           |           | 无符号整数： `byte`、 `ushort`、 `uint`、 `ulong` |
+|           |           | Unicode字符： `char` |
+|           |           | IEEE浮点数： `float`、 `double` |
+|           |           | 高精度十进制小数： `decimal` |
+|           |           | 布林： `bool` |
+|           | 枚举类型   | 用户自定义的`enum E {...}`形式 |
+|           | 结构体类型 | 用户自定义的`struct S {...}`形式 |
+|           | 可空类型   | 使用`null`值对其他所有值类型进行的扩展 |
+| 引用类型   | 类类型     | 其他类型的终极基类： `object` |
+|           |           | Unicode字符串： `string` |
+|           |           | 用户自定义的`class C {...}`形式 |
+|           | 接口类型   | 用户自定义的`interface I {...}`形式 |
+|           | 数组类型   | 一维或多维，例如， `int[]` 和 `int[,]` |
+|           | 委托类型   | 用户自定义的诸如`delegate int  D(...)`的形式 |
+
 The eight integral types provide support for 8-bit, 16-bit, 32-bit, and 64-bit values in signed or unsigned form.
+
+八种整数类型提供了对8位、16位、32位和64位有符号或无符号数值的支持（4×2=8）。
 
 The two floating point types, `float` and `double`, are represented using the 32-bit single-precision and 64-bit double-precision IEEE 754 formats.
 
+两种浮点数类型，`float`和`double`，分别以IEEE 754标准中的32位单精度和64位双精度格式来表式。
+
 The `decimal` type is a 128-bit data type suitable for financial and monetary calculations.
+
+`decimal`类型是一种128位的数据类型，适用于金融和货币运算。
 
 C#'s `bool` type is used to represent boolean values—values that are either `true` or `false`.
 
+C#的`bool`类型用来表示布林值（逻辑值）——即`true`或`假`。
+
 Character and string processing in C# uses Unicode encoding. The `char` type represents a UTF-16 code unit, and the `string` type represents a sequence of UTF-16 code units.
+
+C#中的字符和字符串处理使用的都是Unicode编码。`char`类型表示一个UTF-16代码单元（两个字节），`string`类型表示一个UTF-16代码单元的序列。
 
 The following table summarizes C#'s numeric types.
 
