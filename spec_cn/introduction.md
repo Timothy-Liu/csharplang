@@ -309,7 +309,7 @@ The following table provides an overview of C#'s type system.
 
 下表提供了一个对C#类型的概览。
 
-| __分类__    |                 | __描述__ |
+| __类别__    |                 | __描述__ |
 |-----------------|-----------------|-----------------|
 | 值类型     | 简单类型   | 有符号整数： `sbyte`、 `short`、 `int`、 `long` |
 |           |           | 无符号整数： `byte`、 `ushort`、 `uint`、 `ulong` |
@@ -364,13 +364,38 @@ The following table summarizes C#'s numeric types.
 |                   | 64       | `double`  | 5.0 × 10^−324 to 1.7 × 10^308, 15-digit precision |
 | Decimal           | 128      | `decimal` | 1.0 × 10^−28 to 7.9 × 10^28, 28-digit precision |
 
+下表对C#的数值类型进行了总结。
+
+
+| __类别__      | __比特数__ | __类型__  | __范围/精度__ |
+|-------------------|----------|-----------|---------------------|
+| 有符号整数          | 8        | `sbyte`   | -128...127 |
+|                   | 16       | `short`   | -32,768...32,767 |
+|                   | 32       | `int`     | -2,147,483,648...2,147,483,647 |
+|                   | 64       | `long`    | -9,223,372,036,854,775,808...9,223,372,036,854,775,807 |
+| 无符号整数          | 8        | `byte`    | 0...255 |
+|                   | 16       | `ushort`  | 0...65,535 |
+|                   | 32       | `uint`    | 0...4,294,967,295 |
+|                   | 64       | `ulong`   | 0...18,446,744,073,709,551,615 |
+| 浮点数             | 32       | `float`   | 1.5 × 10^−45 to 3.4 × 10^38, 精度为7位小数 |
+|                   | 64       | `double`  | 5.0 × 10^−324 to 1.7 × 10^308, 精度为15位小数 |
+| Decimal           | 128      | `decimal` | 1.0 × 10^−28 to 7.9 × 10^28, 精度为28位小数 |
+
 C# programs use ***type declarations*** to create new types. A type declaration specifies the name and the members of the new type. Five of C#'s categories of types are user-definable: class types, struct types, interface types, enum types, and delegate types.
+
+C#程序使用**类型声明**来创建新的类型。类型声明指明了类型的名字和成员。C#中有五种类型是允许用户自定义的：类类型，结构体类型，接口类型，枚举类型，和委托类型。
 
 A class type defines a data structure that contains data members (fields) and function members (methods, properties, and others). Class types support single inheritance and polymorphism, mechanisms whereby derived classes can extend and specialize base classes.
 
+类类型定义了包含有数据成员（字段）和函数成员（方法，属性，及其他成员）的数据结构。类类型支持单（基类）继承和多态——借由这些机制，派生类可以对基类进行扩展和专用化。
+
 A struct type is similar to a class type in that it represents a structure with data members and function members. However, unlike classes, structs are value types and do not require heap allocation. Struct types do not support user-specified inheritance, and all struct types implicitly inherit from type `object`.
 
+结构体类型与类类型类似，表示的也是具有数据成员和函数成员的数据结构。然而，与类（类型）不同的是，结构体是值类型而且不要求在堆（内存）上进行分配。结构体类型不支持用户自定义的继承，并且，所有结构体都隐式地继承自`object`类型。
+
 An interface type defines a contract as a named set of public function members. A class or struct that implements an interface must provide implementations of the interface's function members. An interface may inherit from multiple base interfaces, and a class or struct may implement multiple interfaces.
+
+接口类型定义了一个包含有一组公开函数成员的契约。如果一个类或者结构体实现了某个接口，那么它就必需提供对接口（所有）函数成员的实现。一个接口可以继承多个基接口，一个类或结构体也可以实现多个接口。
 
 A delegate type represents references to methods with a particular parameter list and return type. Delegates make it possible to treat methods as entities that can be assigned to variables and passed as parameters. Delegates are similar to the concept of function pointers found in some other languages, but unlike function pointers, delegates are object-oriented and type-safe.
 
