@@ -399,13 +399,23 @@ An interface type defines a contract as a named set of public function members. 
 
 A delegate type represents references to methods with a particular parameter list and return type. Delegates make it possible to treat methods as entities that can be assigned to variables and passed as parameters. Delegates are similar to the concept of function pointers found in some other languages, but unlike function pointers, delegates are object-oriented and type-safe.
 
+委托类型代表了对具有特定参数列表和返回值类型的方法的引用。有了委托，我们可以让方法像看上去像是能被赋值的变量，或者能像参数一样被传递。委托与其他语言中函数指针的概念类似，但与函数指针不同，委托是面向对象且类型安全的。
+
 Class, struct, interface and delegate types all support generics, whereby they can be parameterized with other types.
+
+类、结构体、接口和委托均支持泛型，因此它们可以被其他类型所参数化。
 
 An enum type is a distinct type with named constants. Every enum type has an underlying type, which must be one of the eight integral types. The set of values of an enum type is the same as the set of values of the underlying type.
 
+枚举类型是一种带有名字约束的独特类型。每个枚举类型都具有一个底层类型，这个底层类型必需是八种类型类型中的一种。枚举类型的一组值其实就是其底层类型的一组值。
+
 C# supports single- and multi-dimensional arrays of any type. Unlike the types listed above, array types do not have to be declared before they can be used. Instead, array types are constructed by following a type name with square brackets. For example, `int[]` is a single-dimensional array of `int`, `int[,]` is a two-dimensional array of `int`, and `int[][]` is a single-dimensional array of single-dimensional arrays of `int`.
 
+C#支持任何类型的一维或多维数组。与前述各种类型不同，使用数组类型前不必预先声明。相反，数组类型可以由一个类型名后面跟上方括号来构成。例如，`int[]`是一个`int`类型的一维数组，`int[,]`是一个`int`类型的二维数组，而`int[][]`是一个一维`int`类型数组的一维数组。
+
 Nullable types also do not have to be declared before they can be used. For each non-nullable value type `T` there is a corresponding nullable type `T?`, which can hold an additional value `null`. For instance, `int?` is a type that can hold any 32 bit integer or the value `null`.
+
+可空类型在使用之前也不必预先声明。对于每个非可空类型`T`来说，都有一个能够容纳`null`值的可空类型`T?`与之对应。举例而言，`int?`类型可以容纳任何32位的整数或者`null`值（注：`int`是不能容纳`null`值的）。
 
 C#'s type system is unified such that a value of any type can be treated as an object. Every type in C# directly or indirectly derives from the `object` class type, and `object` is the ultimate base class of all types. Values of reference types are treated as objects simply by viewing the values as type `object`. Values of value types are treated as objects by performing ***boxing*** and ***unboxing*** operations. In the following example, an `int` value is converted to `object` and back again to `int`.
 
