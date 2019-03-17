@@ -435,6 +435,24 @@ When a value of a value type is converted to type `object`, an object instance, 
 
 C#'s unified type system effectively means that value types can become objects "on demand." Because of the unification, general-purpose libraries that use type `object` can be used with both reference types and value types.
 
+C#具有一个统一的类型系统，任何一个值都可以被看作是一个对象。C#中的任何类型都直接或间接地派生自`object`类类型，也就是说，`object`是所有类型的最终基类。引用类型的值可以被直接当作对象来看待，方法是使用`object`类型来观察之。值类型的值也可以被当作对象来看待，但需要经过**装箱**和**拆箱**操作（boxing和unboxing操作）。随后的例子中，一个`int`类型的值被转换成了`object`类型，然后又被转换回`int`类型。
+
+```csharp
+using System;
+
+class Test
+{
+    static void Main() {
+        int i = 123;
+        object o = i;          // 装箱
+        int j = (int)o;        // 拆箱
+    }
+}
+```
+当一个值类型的值为转换为`object`类型后，一个对象实例，也称为“箱”，会被（在内存里）分配出来用以容纳这个值，原来的值会被复制到这个箱中。反过来，当一个`object`引用被转换（cast，译为“模铸”更合适）成值类型时，会检查箱里的值的类型是否正确，并且，如果检查成功，箱里的值就会被复制出来。
+
+C#的统一类型系统明确地意味着值类型可以“按需”变成对象。正是因为这个统一性，那些使用了`object`的通用目的类库（general-purpose libraries）即可以被引用类型所使用，也可以被值类型所使用。（注：此处应该有个例子；另：泛型就是专门不想让你这么玩儿才出现的。）
+
 There are several kinds of ***variables*** in C#, including fields, array elements, local variables, and parameters. Variables represent storage locations, and every variable has a type that determines what values can be stored in the variable, as shown by the following table.
 
 
@@ -447,6 +465,18 @@ There are several kinds of ***variables*** in C#, including fields, array elemen
 | Interface type          | A null reference, a reference to an instance of a class type that implements that interface type, or a reference to a boxed value of a value type that implements that interface type |
 | Array type              | A null reference, a reference to an instance of that array type, or a reference to an instance of a compatible array type |
 | Delegate type           | A null reference or a reference to an instance of that delegate type |
+
+C#中有很多种**变量**（variables），包括：字段、数组元素，局部变量，和（方法）参数。变量代表的是（内存中的）存储位置，而且，每个变量都具有类型。变量的类型决定了什么样的值可以被存储进变量（所关联的内存空间）里，如下表：
+
+| __变量的类型__    | __（变量内存中）可能的内容__ |
+|-------------------------|-----------------------|
+| 非空值类型 | 一个正是此类型的值 |
+| 可空值类型 | 空值或一个正是此类型的值 |
+| `object` | 一个空引用、一个对任何引用类型对象的引用、一个对装箱后的任何值类型的值的引用 |
+| 类类型    | 一个空引用、一个对此类类型实例的引用、一个对此类类型派生类实例的引用 |
+| 接口类型  | 一个空引用、一个对实现了此接口的类类型实例的引用、一个对装箱后的实现了这个接口的值类型的值的引用 |
+| 数组类型  | 一个空引用、一个对此数组类型实例的引用、一个对兼容的数组类型实例的引用 |
+| 委托类型  | 一个空引用或一个对此委托类型实例的引用 |
 
 ## Expressions
 
