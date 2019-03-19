@@ -29,7 +29,24 @@
 
 ## Mar 27, 2019
 
-- Whatever urgent issues accrued over the past few weeks
+#### Default Interface Methods
+See also https://github.com/dotnet/csharplang/issues/406
+
+We now have a proposed runtime implementation for reabstraction.  See https://github.com/dotnet/coreclr/pull/23313
+
+- Reabstraction (open)
+- explicit interface abstract overrides in classes (open)
+
+#### Nullable Reference Types
+
+- What is the nullability of a dynamic value?  Oblivious?
+  See also https://github.com/dotnet/roslyn/issues/29893
+
+- When we compute an annotation in the walker (e.g. type inference), do we use the context?
+  See also https://github.com/dotnet/roslyn/issues/33639
+
+- Inferred nullable state from a finally block (open)
+  See also https://github.com/dotnet/roslyn/issues/34018
 
 ## Mar 25, 2019
 
@@ -59,17 +76,6 @@ See also https://github.com/dotnet/csharplang/issues/2095
   1. To the entry of the switch and all previous cases
   2. To that branch of the switch only
   3. To all code that follows the test in logical order
-
-#### Nullable Reference Types
-
-- What is the nullability of a dynamic value?  Oblivious?
-  See also https://github.com/dotnet/roslyn/issues/29893
-
-- When we compute an annotation in the walker (e.g. type inference), do we use the context?
-  See also https://github.com/dotnet/roslyn/issues/33639
-
-- Inferred nullable state from a finally block (open)
-  See also https://github.com/dotnet/roslyn/issues/34018
 
 ## Mar 6, 2019
 
