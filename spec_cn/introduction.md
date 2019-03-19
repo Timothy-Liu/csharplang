@@ -415,7 +415,7 @@ C#支持任何类型的一维或多维数组。与前述各种类型不同，使
 
 Nullable types also do not have to be declared before they can be used. For each non-nullable value type `T` there is a corresponding nullable type `T?`, which can hold an additional value `null`. For instance, `int?` is a type that can hold any 32 bit integer or the value `null`.
 
-可空类型在使用之前也不必预先声明。对于每个非可空类型`T`来说，都有一个能够容纳`null`值的可空类型`T?`与之对应。举例而言，`int?`类型可以容纳任何32位的整数或者`null`值（注：`int`是不能容纳`null`值的）。
+可空类型在使用之前也不必预先声明。对于每个非可空类型`T`来说，都有一个能够容纳`null`值的可空类型`T?`与之对应。举例而言，`int?`类型可以容纳任何32位的整数或者`null`值（译注：`int`是不能容纳`null`值的）。
 
 C#'s type system is unified such that a value of any type can be treated as an object. Every type in C# directly or indirectly derives from the `object` class type, and `object` is the ultimate base class of all types. Values of reference types are treated as objects simply by viewing the values as type `object`. Values of value types are treated as objects by performing ***boxing*** and ***unboxing*** operations. In the following example, an `int` value is converted to `object` and back again to `int`.
 
@@ -451,7 +451,7 @@ class Test
 ```
 当一个值类型的值为转换为`object`类型后，一个对象实例，也称为“箱”，会被（在内存里）分配出来用以容纳这个值，原来的值会被复制到这个箱中。反过来，当一个`object`引用被转换（cast，译为“模铸”更合适）成值类型时，会检查箱里的值的类型是否正确，并且，如果检查成功，箱里的值就会被复制出来。
 
-C#的统一类型系统明确地意味着值类型可以“按需”变成对象。正是因为这个统一性，那些使用了`object`的通用目的类库（general-purpose libraries）即可以被引用类型所使用，也可以被值类型所使用。（注：此处应该有个例子；另：泛型就是专门不想让你这么玩儿才出现的。）
+C#的统一类型系统明确地意味着值类型可以“按需”变成对象。正是因为这个统一性，那些使用了`object`的通用目的类库（general-purpose libraries）即可以被引用类型所使用，也可以被值类型所使用。（译注：此处应该有个例子；另：泛型就是专门不想让你这么玩儿才出现的。）
 
 There are several kinds of ***variables*** in C#, including fields, array elements, local variables, and parameters. Variables represent storage locations, and every variable has a type that determines what values can be stored in the variable, as shown by the following table.
 
@@ -478,13 +478,19 @@ C#中有很多种**变量**（variables），包括：字段、数组元素，�
 | 数组类型  | 一个空引用、一个对此数组类型实例的引用、一个对兼容的数组类型实例的引用 |
 | 委托类型  | 一个空引用或一个对此委托类型实例的引用 |
 
-## Expressions
+## Expressions | 表达式
 
 ***Expressions*** are constructed from ***operands*** and ***operators***. The operators of an expression indicate which operations to apply to the operands. Examples of operators include `+`, `-`, `*`, `/`, and `new`. Examples of operands include literals, fields, local variables, and expressions.
 
 When an expression contains multiple operators, the ***precedence*** of the operators controls the order in which the individual operators are evaluated. For example, the expression `x + y * z` is evaluated as `x + (y * z)` because the `*` operator has higher precedence than the `+` operator.
 
 Most operators can be ***overloaded***. Operator overloading permits user-defined operator implementations to be specified for operations where one or both of the operands are of a user-defined class or struct type.
+
+**表达式**（expressions）由**操作数**（operands）和**操作符**（operators）构成。操作符表明了会将何种操作施加在操作数上。操作符的例子包括`+`、`-`、`*`、`/`、和 `new`（译注：操作符不一定都是符号，也可能是关键字，也就是单词）。
+
+当一个表达式包含多个操作符时，各个操作符的求值顺序由操作符的**优先级**（precedence）来控制。例如，表达式`x + y * z`会以`x + (y * z)`的方式进行求值，因为`*`操作符具有比`+`操作符更高的优先级。
+
+大多数操作符都能够被**重载**（overload）。当一个或两个操作数是用户定义的类或结构体时，操作符重载允许将用户定义的操作实现指派给这个操作（译注：新手断然看不懂这是什么意思）。
 
 The following table summarizes C#'s operators, listing the operator categories in order of precedence from highest to lowest. Operators in the same category have equal precedence.
 
@@ -538,6 +544,60 @@ The following table summarizes C#'s operators, listing the operator categories i
 | Assignment or anonymous function | `x = y`           | Assignment |
 |                                  | `x op= y`         | Compound assignment; supported operators are `*=` `/=` `%=` `+=` `-=` `<<=` `>>=` `&=` `^=` <code>&#124;=</code> |
 |                                  | `(T x) => y`      | Anonymous function (lambda expression) |
+
+The following table summarizes C#'s operators, listing the operator categories in order of precedence from highest to lowest. Operators in the same category have equal precedence.
+下面的表格是对C#操作符的一个总结，按由高到低的优先级罗列了操作符的类别。同一个类别中的操作符具有相同的优先级。
+
+| __类别__                     | __表达式__    | __描述__ |
+|----------------------------------|-------------------|-----------------|
+| 基元操作符（Primary）              | `x.m`             | 成员访问 |
+|                                  | `x(...)`          | 方法及委托调用 |
+|                                  | `x[...]`          | 数组及索引器访问 |
+|                                  | `x++`             | 后置自增 |
+|                                  | `x--`             | 后置自减 |
+|                                  | `new T(...)`      | 对象及委托（实例的）创建 |
+|                                  | `new T(...){...}` | 带初始化器的对象创建 |
+|                                  | `new {...}`       | 匿名对象初始化器 |
+|                                  | `new T[...]`      | 数组（实例）的创建 |
+|                                  | `typeof(T)`       | Obtain `System.Type` object for `T` |
+|                                  | `checked(x)`      | Evaluate expression in checked context |
+|                                  | `unchecked(x)`    | Evaluate expression in unchecked context |
+|                                  | `default(T)`      | Obtain default value of type `T` |
+|                                  | `delegate {...}`  | Anonymous function (anonymous method) |
+| 单目操作符（Unary）                | `+x`              | Identity |
+|                                  | `-x`              | Negation |
+|                                  | `!x`              | Logical negation |
+|                                  | `~x`              | Bitwise negation |
+|                                  | `++x`             | Pre-increment |
+|                                  | `--x`             | Pre-decrement |
+|                                  | `(T)x`            | Explicitly convert `x` to type `T` |
+|                                  | `await x`         | Asynchronously wait for `x` to complete |
+| 乘法操作符（Multiplicative）       | `x * y`           | Multiplication |
+|                                  | `x / y`           | Division |
+|                                  | `x % y`           | Remainder |
+| 加法操作符（Additive）             | `x + y`           | Addition, string concatenation, delegate combination |
+|                                  | `x - y`           | Subtraction, delegate removal |
+| 平移操作符（Shift）                | `x << y`          | Shift left |
+|                                  | `x >> y`          | Shift right |
+| 关系操作符，类型测试操作符           | `x < y`           | Less than |
+|                                  | `x > y`           | Greater than |
+|                                  | `x <= y`          | Less than or equal |
+|                                  | `x >= y`          | Greater than or equal |
+|                                  | `x is T`          | Return `true` if `x` is a `T`, `false` otherwise |
+|                                  | `x as T`          | Return `x` typed as `T`, or `null` if `x` is not a `T` |
+| 相等性操作符（Equality）           | `x == y`          | Equal      |
+|                                  | `x != y`          | Not equal |
+| 逻辑与操作符（Logical AND）        | `x & y`           | Integer bitwise AND, boolean logical AND |
+| 逻辑异或操作符（Logical XOR）      | `x ^ y`           | Integer bitwise XOR, boolean logical XOR |
+| 逻辑或操作符（Logical OR）         | <code>x &#124; y</code> | Integer bitwise OR, boolean logical OR |
+| 条件与操作符（Conditional AND）    | `x && y`          | Evaluates `y` only if `x` is `true` |
+| 条件或操作符（Conditional OR）     | <code>x &#124;&#124; y</code> | Evaluates `y` only if `x` is `false` |
+| 空值合并操作符（Null coalescing）  | `x ?? y`          | Evaluates to `y` if `x` is `null`, to `x` otherwise |
+| 条件操作符（Conditional）          | `x ? y : z`       | Evaluates `y` if `x` is `true`, `z` if `x` is `false` |
+| 赋值操作符（Assignment）及匿名函数  | `x = y`           | Assignment |
+|                                  | `x op= y`         | Compound assignment; supported operators are `*=` `/=` `%=` `+=` `-=` `<<=` `>>=` `&=` `^=` <code>&#124;=</code> |
+|                                  | `(T x) => y`      | Anonymous function (lambda expression) |
+
 
 ## Statements
 
