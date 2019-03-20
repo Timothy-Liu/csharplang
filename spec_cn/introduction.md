@@ -559,44 +559,44 @@ The following table summarizes C#'s operators, listing the operator categories i
 |                                  | `new T(...){...}` | 带初始化器的对象创建 |
 |                                  | `new {...}`       | 匿名对象初始化器 |
 |                                  | `new T[...]`      | 数组（实例）的创建 |
-|                                  | `typeof(T)`       | Obtain `System.Type` object for `T` |
-|                                  | `checked(x)`      | Evaluate expression in checked context |
-|                                  | `unchecked(x)`    | Evaluate expression in unchecked context |
-|                                  | `default(T)`      | Obtain default value of type `T` |
-|                                  | `delegate {...}`  | Anonymous function (anonymous method) |
-| 单目操作符（Unary）                | `+x`              | Identity |
-|                                  | `-x`              | Negation |
-|                                  | `!x`              | Logical negation |
-|                                  | `~x`              | Bitwise negation |
-|                                  | `++x`             | Pre-increment |
-|                                  | `--x`             | Pre-decrement |
-|                                  | `(T)x`            | Explicitly convert `x` to type `T` |
-|                                  | `await x`         | Asynchronously wait for `x` to complete |
-| 乘法操作符（Multiplicative）       | `x * y`           | Multiplication |
-|                                  | `x / y`           | Division |
-|                                  | `x % y`           | Remainder |
-| 加法操作符（Additive）             | `x + y`           | Addition, string concatenation, delegate combination |
-|                                  | `x - y`           | Subtraction, delegate removal |
-| 平移操作符（Shift）                | `x << y`          | Shift left |
-|                                  | `x >> y`          | Shift right |
-| 关系操作符，类型测试操作符           | `x < y`           | Less than |
-|                                  | `x > y`           | Greater than |
-|                                  | `x <= y`          | Less than or equal |
-|                                  | `x >= y`          | Greater than or equal |
-|                                  | `x is T`          | Return `true` if `x` is a `T`, `false` otherwise |
-|                                  | `x as T`          | Return `x` typed as `T`, or `null` if `x` is not a `T` |
-| 相等性操作符（Equality）           | `x == y`          | Equal      |
-|                                  | `x != y`          | Not equal |
-| 逻辑与操作符（Logical AND）        | `x & y`           | Integer bitwise AND, boolean logical AND |
-| 逻辑异或操作符（Logical XOR）      | `x ^ y`           | Integer bitwise XOR, boolean logical XOR |
-| 逻辑或操作符（Logical OR）         | <code>x &#124; y</code> | Integer bitwise OR, boolean logical OR |
-| 条件与操作符（Conditional AND）    | `x && y`          | Evaluates `y` only if `x` is `true` |
-| 条件或操作符（Conditional OR）     | <code>x &#124;&#124; y</code> | Evaluates `y` only if `x` is `false` |
-| 空值合并操作符（Null coalescing）  | `x ?? y`          | Evaluates to `y` if `x` is `null`, to `x` otherwise |
-| 条件操作符（Conditional）          | `x ? y : z`       | Evaluates `y` if `x` is `true`, `z` if `x` is `false` |
-| 赋值操作符（Assignment）及匿名函数  | `x = y`           | Assignment |
-|                                  | `x op= y`         | Compound assignment; supported operators are `*=` `/=` `%=` `+=` `-=` `<<=` `>>=` `&=` `^=` <code>&#124;=</code> |
-|                                  | `(T x) => y`      | Anonymous function (lambda expression) |
+|                                  | `typeof(T)`       | 获取（类型）`T`的`System.Type`对象 |
+|                                  | `checked(x)`      | 在检查（溢出）的上下文中对表达式求值 |
+|                                  | `unchecked(x)`    | 在不检查（溢出）的上下文中对表达式求值 |
+|                                  | `default(T)`      | 获取类型`T`的默认值 |
+|                                  | `delegate {...}`  | 匿名函数（匿名方法形式） |
+| 单目操作符（Unary）                | `+x`              | 衡等式???（原值） |
+|                                  | `-x`              | 负值 |
+|                                  | `!x`              | 逻辑非值 |
+|                                  | `~x`              | 比特非值（补值，反值） |
+|                                  | `++x`             | 前置自增 |
+|                                  | `--x`             | 前置自减 |
+|                                  | `(T)x`            | 显式地将`x`转换为`T`类型（cast） |
+|                                  | `await x`         | 异步地等待`x`的完成 |
+| 乘法操作符（Multiplicative）       | `x * y`           | 乘法 |
+|                                  | `x / y`           | 除法 |
+|                                  | `x % y`           | 取余数 |
+| 加法操作符（Additive）             | `x + y`           | 加法，字符串连接，委托合并 |
+|                                  | `x - y`           | 减法，委托移除 |
+| 平移操作符（Shift）                | `x << y`          | 左移 |
+|                                  | `x >> y`          | 右移 |
+| 关系操作符，类型测试操作符           | `x < y`           | 小于 |
+|                                  | `x > y`           | 大于 |
+|                                  | `x <= y`          | 小于或等于 |
+|                                  | `x >= y`          | 大于或等于 |
+|                                  | `x is T`          | 如果`x`是一个`T`类型的值则求得`true`，否则求得`false` |
+|                                  | `x as T`          | 如果`x`的类型是`T`则得到一个`T`类型的值，否则得到一个`null`值 |
+| 相等性操作符（Equality）           | `x == y`          | 相等      |
+|                                  | `x != y`          | 不相等 |
+| 逻辑与操作符（Logical AND）        | `x & y`           | 整数二进制与，布林逻辑与 |
+| 逻辑异或操作符（Logical XOR）      | `x ^ y`           | 整数二进制异或，布林逻辑异或 |
+| 逻辑或操作符（Logical OR）         | <code>x &#124; y</code> | 整数二进制或，布林逻辑或 |
+| 条件与操作符（Conditional AND）    | `x && y`          | 仅当`x`为`true`的时候`y`才会被求值 |
+| 条件或操作符（Conditional OR）     | <code>x &#124;&#124; y</code> | 仅当`x`为`false`的时候`y`才会被求值 |
+| 空值合并操作符（Null coalescing）  | `x ?? y`          | 如果`x`不为`null`求得`x`的值，否则求得`y`的值 |
+| 条件操作符（Conditional）          | `x ? y : z`       | 如果`x`的值为`true`求得`x`的值，否则，当`x`的值为`false`求得`y`的值 |
+| 赋值操作符（Assignment）及匿名函数  | `x = y`           | 赋值 |
+|                                  | `x op= y`         | 复合赋值，支持的操作符包括 `*=` `/=` `%=` `+=` `-=` `<<=` `>>=` `&=` `^=` <code>&#124;=</code> |
+|                                  | `(T x) => y`      | 匿名函数（lambda表达式形式） |
 
 
 ## Statements
