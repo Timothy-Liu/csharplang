@@ -599,7 +599,7 @@ The following table summarizes C#'s operators, listing the operator categories i
 |                                  | `(T x) => y`      | 匿名函数（lambda表达式形式） |
 
 
-## Statements
+## Statements | 语句
 
 The actions of a program are expressed using ***statements***. C# supports several different kinds of statements, a number of which are defined in terms of embedded statements.
 
@@ -622,6 +622,28 @@ The `checked` and `unchecked` statements are used to control the overflow checki
 The `lock` statement is used to obtain the mutual-exclusion lock for a given object, execute a statement, and then release the lock.
 
 The `using` statement is used to obtain a resource, execute a statement, and then dispose of that resource.
+
+程序的动作是用**语句**（statements）来表达的。C#支持多种不同的语句，其中有不少语句称为可被嵌入语句（embedded statements）。（译注：就是一条语句可以被嵌入到另一条中。）
+
+**块**（block）允许把多个语句写在只允许出现一条语句的地方。一个块中包含由分隔符`{`和`}`括起来的一组语句。
+
+**声明语句**（declaration statements）用于声明局部变量和常量。
+
+**表达式语句**（expression statements）用来对表达式进行求值。能当作语句来使用的表达式包括方法调用、使用`new`操作符分配对象、使用`=`及复合赋值操作符进行赋值、使用`++`和`--`操作符进行增加和减少，以及 `await`（等待）表达式。
+
+**选择语句**（selection statements）会基于某些表达式的值从多个可能的语句中选一个来执行。这组语句包括`if`和`switch`。
+
+**迭代语句**（iteration statements，亦称循环语句）被用于反复执行被嵌入其中的语句。这组语句包括`while`、`do`、`for`和`foreach`。
+
+**跳转语句**（jump statements）用于转移（对程序执行的）控制。这组语句包括`break`、`continue`、`goto`、`throw`、`return`和`yield`。
+
+`try`...`catch`语句用于捕捉在执行某个语句块时所发生的异常。`try`...`finally`语句则用于指定总能够被执行的收尾代码——无论有没有异常发生。
+
+`checked`和`unchecked`语句用于为整数的算数运算或转换是否进行溢出检验做出控制。
+
+`lock`语句用于为给定对象获取互斥锁（mutual-exclusion lock），执行一个语句，然后再释放锁。
+
+`using`语句（译注：不是程序开头的`using`指令）用于获取一个资源（译注：这个资源一定要实现IDisposible接口），执行一个语句，然后再释放资源。
 
 Below are examples of each kind of statement
 
