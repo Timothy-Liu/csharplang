@@ -895,6 +895,256 @@ static void Main() {
 }
 ```
 
+以下是各种语句的例子：
+
+__局部变量声明__
+
+```csharp
+static void Main() {
+   int a;
+   int b = 2, c = 3;
+   a = 1;
+   Console.WriteLine(a + b + c);
+}
+```
+
+
+__局部常量声明__
+
+```csharp
+static void Main() {
+    const float pi = 3.1415927f;
+    const int r = 25;
+    Console.WriteLine(pi * r * r);
+}
+```
+
+
+__表达式语句__
+
+```csharp
+static void Main() {
+    int i;
+    i = 123;                // 表达式语句
+    Console.WriteLine(i);   // 表达式语句
+    i++;                    // 表达式语句
+    Console.WriteLine(i);   // 表达式语句
+}
+```
+
+__`if`语句__
+
+```csharp
+static void Main(string[] args) {
+    if (args.Length == 0) {
+        Console.WriteLine("No arguments");
+    }
+    else {
+        Console.WriteLine("One or more arguments");
+    }
+}
+```
+
+
+__`switch`语句__
+
+```csharp
+static void Main(string[] args) {
+    int n = args.Length;
+    switch (n) {
+        case 0:
+            Console.WriteLine("No arguments");
+            break;
+        case 1:
+            Console.WriteLine("One argument");
+            break;
+        default:
+            Console.WriteLine("{0} arguments", n);
+            break;
+    }
+}
+```
+
+__`while`语句__
+
+```csharp
+static void Main(string[] args) {
+    int i = 0;
+    while (i < args.Length) {
+        Console.WriteLine(args[i]);
+        i++;
+    }
+}
+```
+
+
+__`do`语句__
+
+```csharp
+static void Main() {
+    string s;
+    do {
+        s = Console.ReadLine();
+        if (s != null) Console.WriteLine(s);
+    } while (s != null);
+}
+```
+
+__`for`语句__
+
+```csharp
+static void Main(string[] args) {
+    for (int i = 0; i < args.Length; i++) {
+        Console.WriteLine(args[i]);
+    }
+}
+```
+
+__`foreach`语句__
+
+```csharp
+static void Main(string[] args) {
+    foreach (string s in args) {
+        Console.WriteLine(s);
+    }
+}
+```
+
+__`break`语句__
+
+```csharp
+static void Main() {
+    while (true) {
+        string s = Console.ReadLine();
+        if (s == null) break;
+        Console.WriteLine(s);
+    }
+}
+```
+
+__`continue`语句__
+
+```csharp
+static void Main(string[] args) {
+    for (int i = 0; i < args.Length; i++) {
+        if (args[i].StartsWith("/")) continue;
+        Console.WriteLine(args[i]);
+    }
+}
+```
+
+__`goto`语句__
+
+```csharp
+static void Main(string[] args) {
+    int i = 0;
+    goto check;
+    loop:
+    Console.WriteLine(args[i++]);
+    check:
+    if (i < args.Length) goto loop;
+}
+```
+
+__`return`语句__
+
+```csharp
+static int Add(int a, int b) {
+    return a + b;
+}
+
+static void Main() {
+    Console.WriteLine(Add(1, 2));
+    return;
+}
+```
+
+__`yield`语句__
+
+```csharp
+static IEnumerable<int> Range(int from, int to) {
+    for (int i = from; i < to; i++) {
+        yield return i;
+    }
+    yield break;
+}
+
+static void Main() {
+    foreach (int x in Range(-10,10)) {
+        Console.WriteLine(x);
+    }
+}
+```
+
+__`throw`和`try`语句__
+
+```csharp
+static double Divide(double x, double y) {
+    if (y == 0) throw new DivideByZeroException();
+    return x / y;
+}
+
+static void Main(string[] args) {
+    try {
+        if (args.Length != 2) {
+            throw new Exception("Two numbers required");
+        }
+        double x = double.Parse(args[0]);
+        double y = double.Parse(args[1]);
+        Console.WriteLine(Divide(x, y));
+    }
+    catch (Exception e) {
+        Console.WriteLine(e.Message);
+    }
+    finally {
+        Console.WriteLine("Good bye!");
+    }
+}
+```
+
+__`checked`和`unchecked`语句__
+
+```csharp
+static void Main() {
+    int i = int.MaxValue;
+    checked {
+        Console.WriteLine(i + 1);        // 异常
+    }
+    unchecked {
+        Console.WriteLine(i + 1);        // 溢出（不产生异常）
+    }
+}
+```
+
+__`lock`语句__
+
+```csharp
+class Account
+{
+    decimal balance;
+    public void Withdraw(decimal amount) {
+        lock (this) {
+            if (amount > balance) {
+                throw new Exception("Insufficient funds");
+            }
+            balance -= amount;
+        }
+    }
+}
+```
+
+__`using`语句__
+
+```csharp
+static void Main() {
+    using (TextWriter w = File.CreateText("test.txt")) {
+        w.WriteLine("Line one");
+        w.WriteLine("Line two");
+        w.WriteLine("Line three");
+    }
+}
+```
+
 ## Classes and objects
 
 ***Classes*** are the most fundamental of C#'s types. A class is a data structure that combines state (fields) and actions (methods and other function members) in a single unit. A class provides a definition for dynamically created ***instances*** of the class, also known as ***objects***. Classes support ***inheritance*** and ***polymorphism***, mechanisms whereby ***derived classes*** can extend and specialize ***base classes***.
