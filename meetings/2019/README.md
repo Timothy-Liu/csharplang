@@ -4,13 +4,11 @@
 
 ## Schedule when convenient
 
-- Discussion of refreshing language spec (Neal)
-- Double-check the desired syntax for switch expressions (Julien)
-- Making a `CancellationToken` available in async-iterator method bodies; possibly reserving a keyword (Julien/Stephen) 
+- Nullable Reference Types: Open LDM Issues https://github.com/dotnet/csharplang/issues/2201
+- Default Implementation Members: Open LDM Issues https://github.com/dotnet/csharplang/issues/406
 - Allowing pattern-based `foreach` and `await foreach` to bind to an extension `GetEnumerator`/`GetAsyncEnumerator` and `MoveNext`/`MoveNextAsync` (Julien/Chris)
 - Syntax of positional records/primary constructors (Andy)
-- Nullable sidecar files (Immo)
-- Nullable Reference Types: Open LDM Issues https://github.com/dotnet/csharplang/issues/2201
+- Discussion of refreshing language spec (Neal)
 
 ## Recurring topics
 
@@ -37,6 +35,12 @@ We now have a proposed runtime implementation for reabstraction.  See https://gi
 
 - Reabstraction (open)
 - explicit interface abstract overrides in classes (open)
+
+- Is `object.MemberwiseClone()` accessible in an interface?
+
+- Confirm: `static int P { get; set; }` is an auto-property with a compiler-generated backing field?
+
+- Confirm: `partial` on a method declaration implies `private`, and no access modifier is permitted?
 
 #### Nullable Reference Types
 
