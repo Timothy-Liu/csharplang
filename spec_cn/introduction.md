@@ -1145,11 +1145,15 @@ static void Main() {
 }
 ```
 
-## Classes and objects
+## Classes and objects | 类与对象
 
 ***Classes*** are the most fundamental of C#'s types. A class is a data structure that combines state (fields) and actions (methods and other function members) in a single unit. A class provides a definition for dynamically created ***instances*** of the class, also known as ***objects***. Classes support ***inheritance*** and ***polymorphism***, mechanisms whereby ***derived classes*** can extend and specialize ***base classes***.
 
+**类**（classes）是C#类型系统最基础的部分。类是一种能将状态（即字段）和行为（即方法和其他函数成员）结合在一个独立单元中的数据结构。类为创建其**实例**（instances）提供了定义，实例也被称为**对象**（objects）。类支持**继承**（inheritance）和**多态**（polymorphism）机制——它们都基于**派生类**（derived classes）对**基类**（base classes）的扩展与特殊化。
+
 New classes are created using class declarations. A class declaration starts with a header that specifies the attributes and modifiers of the class, the name of the class, the base class (if given), and the interfaces implemented by the class. The header is followed by the class body, which consists of a list of member declarations written between the delimiters `{` and `}`.
+
+使用类声明（class declarations）可以创建新的类。类声明以一个声明头（header）开始，声明头里指明了（用于修饰）这个类的特征（attribute）和修饰符（modifiers）、类的名字、这个类的基类和所实现的接口（如果有）。跟在类的声明头之后的是类体（body），类体是书写在一对花括号分隔符（`{`和`}`）中的一系列成员声明。
 
 The following is a declaration of a simple class named `Point`:
 
@@ -1164,13 +1168,37 @@ public class Point
     }
 }
 ```
+
+以下代码是一个简单的类的声明，类的名字叫`Point`：
+
+```csharp
+public class Point
+{
+    public int x, y;
+
+    public Point(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+}
+```
+
 Instances of classes are created using the `new` operator, which allocates memory for a new instance, invokes a constructor to initialize the instance, and returns a reference to the instance. The following statements create two `Point` objects and store references to those objects in two variables:
 
-```
+```csharp
 Point p1 = new Point(0, 0);
 Point p2 = new Point(10, 20);
 ```
 The memory occupied by an object is automatically reclaimed when the object is no longer in use. It is neither necessary nor possible to explicitly deallocate objects in C#.
+
+使用`new`操作符可以创建类的实例。`new`操作符会为实例分配内存并调用一个（指定的）构造器来对实例进行初始化，然后返回一个对实例的引用。下面的语句创建了两个`Point`（类类型的）对象并且把对这两个对象的引用存储在了两个变量里：
+
+```csharp
+Point p1 = new Point(0, 0);
+Point p2 = new Point(10, 20);
+```
+
+一旦对象不再被使用，被对象所占用的内存就会被自动地回收。在C#中，既没必要也没办法显式地销毁（deallocate）一个对象。
 
 ### Members
 
