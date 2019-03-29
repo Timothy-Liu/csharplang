@@ -1200,7 +1200,7 @@ Point p2 = new Point(10, 20);
 
 一旦对象不再被使用，被对象所占用的内存就会被自动地回收。在C#中，既没必要也没办法显式地销毁（deallocate）一个对象。
 
-### Members
+### Members | 成员
 
 The members of a class are either ***static members*** or ***instance members***. Static members belong to classes, and instance members belong to objects (instances of classes).
 
@@ -1220,7 +1220,24 @@ The following table provides an overview of the kinds of members a class can con
 | Destructors  | Actions to perform before instances of the class are permanently discarded |
 | Types        | Nested types declared by the class |
 
-### Accessibility
+类的成员要么是**静态成员**（static members）要么是**实例成员**（instance members）。静态成员属于类，而实例成员属于对象（即类的实例）。
+
+下表是对类所能包含的所有成员种类的一个概览。
+
+| __成员__   | __描述__ |
+|------------  |-----------------|
+| 常量    | 与类相关联的常量 |
+| 字段    | 隶属于类的变量 |
+| 方法    | 可被类执行运算与行为 |
+| 属性    | 与读写类的具名属性相关联的操作 |
+| 索引器  | 与像数组般索引类的实例相关联的操作 |
+| 事件    | 可被类所生成的通知 |
+| 操作符  | 被类所支持的类型转换及表达式操作符 |
+| 构造器  | 被用来初始化类的实例或类本身的行为 |
+| 析构器  | 在类的对象被永久丢弃前所执行的行为 |
+| 类型    | 被类所声明的嵌套类型 |
+
+### Accessibility | 访问性
 
 Each member of a class has an associated accessibility, which controls the regions of program text that are able to access the member. There are five possible forms of accessibility. These are summarized in the following table.
 
@@ -1232,6 +1249,16 @@ Each member of a class has an associated accessibility, which controls the regio
 | `internal`           | Access limited to this program |
 | `protected internal` | Access limited to this program or classes derived from this class |
 | `private`            | Access limited to this class |
+
+类的每个成员都有一个与之关联的访问性，访问性控制着从程序文本的哪些区域可以访问这个成员。访问性有五种可能的形式（译注：C# 7中有所增加），它们总结于下表之中：
+
+| __访问性__    | __含义__ |
+|----------------------|-----------------|
+| `public`             | 访问不受限制 |
+| `protected`          | 访问被限制于当前类或当前类的派生类 |
+| `internal`           | 访问被限制于当前程序 |
+| `protected internal` | 访问被限制于当前程序或当前类的派生类 |
+| `private`            | 访问被限制于当前类 |
 
 ### Type parameters
 
