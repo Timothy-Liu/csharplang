@@ -1260,7 +1260,7 @@ Each member of a class has an associated accessibility, which controls the regio
 | `protected internal` | 访问被限制于当前程序或当前类的派生类 |
 | `private`            | 访问被限制于当前类 |
 
-### Type parameters
+### Type parameters | 类型参数
 
 A class definition may specify a set of type parameters by following the class name with angle brackets enclosing a list of type parameter names. The type parameters can the be used in the body of the class declarations to define the members of the class. In the following example, the type parameters of `Pair` are `TFirst` and `TSecond`:
 
@@ -1280,10 +1280,31 @@ Pair<int,string> pair = new Pair<int,string> { First = 1, Second = "two" };
 int i = pair.First;     // TFirst is int
 string s = pair.Second; // TSecond is string
 ```
-A generic type with type arguments provided, like `Pair<int,string>
-    ` above, is called a constructed type.
+A generic type with type arguments provided, like `Pair<int,string>` above, is called a constructed type.
 
-### Base classes
+在类的定义中可以指定一组类型参数，方法是在类名后跟上一对尖括号，并在尖括号里写上一列类型参数名。这些类型参数名可以用于在类体中定义类的成员。在下面的例子中，`Pair`的类型参数是`TFirst`和`TSecond`：
+
+```csharp
+public class Pair<TFirst,TSecond>
+{
+    public TFirst First;
+    public TSecond Second;
+}
+```
+
+带有类型参数的类类型被称为泛型（generic）类类型。结构体、接口和委托也可以是泛型的。
+
+当使用一个泛型类的时候，必需为每个类型参数（type parameters）提供类型实际参数（type arguments）：
+
+```csharp
+Pair<int,string> pair = new Pair<int,string> { First = 1, Second = "two" };
+int i = pair.First;     // TFirst为int
+string s = pair.Second; // TSecond为string
+```
+
+一个具有类型实际参数的泛型类，譬如前面的`Pair<int,string>`，被称为已构造的类型（constructed type）。
+
+### Base classes | 基类
 
 A class declaration may specify a base class by following the class name and type parameters with a colon and the name of the base class. Omitting a base class specification is the same as deriving from type `object`. In the following example, the base class of `Point3D` is `Point`, and the base class of `Point` is `object`:
 
@@ -1307,6 +1328,30 @@ public class Point3D: Point
     }
 }
 ```
+
+在类的声明中可以指定一个基类，方法是在类名和类型参数（如果有）后面跟上一个冒号（`:`）然后再跟上基类的名字。省略基类的名字等同于从`object`类派生。在下面的例子中，`Point3D`类的基类是`Point`，而`Point`类的基类是`object`：
+
+```csharp
+public class Point
+{
+    public int x, y;
+
+    public Point(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+}
+
+public class Point3D: Point
+{
+    public int z;
+
+    public Point3D(int x, int y, int z): base(x, y) {
+        this.z = z;
+    }
+}
+```
+
 A class inherits the members of its base class. Inheritance means that a class implicitly contains all members of its base class, except for the instance and static constructors, and the destructors of the base class. A derived class can add new members to those it inherits, but it cannot remove the definition of an inherited member. In the previous example, `Point3D` inherits the `x` and `y` fields from `Point`, and every `Point3D` instance contains three fields, `x`, `y`, and `z`.
 
 An implicit conversion exists from a class type to any of its base class types. Therefore, a variable of a class type can reference an instance of that class or an instance of any derived class. For example, given the previous class declarations, a variable of type `Point` can reference either a `Point` or a `Point3D`:
