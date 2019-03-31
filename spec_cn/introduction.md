@@ -1361,7 +1361,16 @@ Point a = new Point(10, 20);
 Point b = new Point3D(10, 20, 30);
 ```
 
-### Fields
+一个类会继承其基类的成员。继承意味着一个类会隐式地包含其基类除实例构造器、静态构造器和析构器外的所有成员。派生类可以在继承成员的基础上增添新的成员，但不能移除继承来的成员。在前面的例子中，`Point3D`类从`Point`类继承了`x`和`y`这两个字段，而每个`Point3D`类的实例包含三个字段——`x`、`y`和`z`。
+
+从某个类类型向其基类类型可以做隐式类型转换。因此，一个类类型的变量可以引用一个此类的任意派生类类型的实例。例如，给定前述类的继承，则`Point`类型的变量即可以引用一个`Point`类型的实例，也可以引用一个`Point3D`类型的实例：
+
+```csharp
+Point a = new Point(10, 20);
+Point b = new Point3D(10, 20, 30);
+```
+
+### Fields | 字段
 
 A field is a variable that is associated with a class or with an instance of a class.
 
@@ -1389,6 +1398,34 @@ public class Color
 }
 ```
 As shown in the previous example, ***read-only fields*** may be declared with a `readonly` modifier. Assignment to a `readonly` field can only occur as part of the field's declaration or in a constructor in the same class.
+
+字段是与类或类的实例所关联的变量。
+
+带有`static`修饰符的字段声明定义了一个**静态字段**（static field）。静态字段标识着唯一的存储位置。无论多少个实例或多少个（派生）类被创建出来，静态字段都是唯一的（原：永远只有一份拷贝）。
+
+不带`static`修饰符的字段声明则定义了一个**实例字段**（instance field）。类的每个实例都包含了这个类所有实例字段的独立的拷贝。
+
+在下面的例子中，`Color`类的每个实例都具有`r`、`g`、`b`三个实例字段的独立拷贝，但`Black`、`White`、`Red`、`Green`和`Blue`这些静态字段却只有一个拷贝。
+
+```csharp
+public class Color
+{
+    public static readonly Color Black = new Color(0, 0, 0);
+    public static readonly Color White = new Color(255, 255, 255);
+    public static readonly Color Red = new Color(255, 0, 0);
+    public static readonly Color Green = new Color(0, 255, 0);
+    public static readonly Color Blue = new Color(0, 0, 255);
+    private byte r, g, b;
+
+    public Color(byte r, byte g, byte b) {
+        this.r = r;
+        this.g = g;
+        this.b = b;
+    }
+}
+```
+
+如前面例子中所示，通过使用`readonly`修饰符可以声明**只读字段**（read-only fields）。对`readonly`字段的赋值要么是字段声明的一部分，要么只能在这个类的（译注：静态或实例）构造器中来完成。
 
 ### Methods
 
