@@ -258,6 +258,14 @@ class D : IA, IB, IC
 
 When a `virtual` or `abstract` member is accessed using the syntax `base(Type).M`, it is required that `Type` contains a unique *most specific override* for `M`.
 
+### Binding base clauses
+
+Interfaces now contain types.  These types may be used in the base clause as base interfaces.  When binding a base clause, we may need to know the set of base interfaces to bind those types (e.g. to lookup in them and to resolve protected access).  The meaning of an interface's base clause is thus circularly defined.  To break the cycle, we add a new language rules corresponding to a similar rule already in place for classes.
+
+While determining the meaning of the *interface_base* of an interface, the base interfaces are temporarily assumed to be empty. Intuitively this ensures that the meaning of a base clause cannot recursively depend on itself. 
+
+When an interface IB extends an interface IA, it is a compile-time error for IA to depend on IB. An interface ***directly depends on*** its direct base interfaces (if any) and directly depends on the type within which it is immediately nested (if any). Given this definition, and the definition of *directly depends on* for classes, the complete set of types upon which an interface depends is the reflexive and transitive closure of the directly depends on relationship.
+
 ### Effect on existing programs
 
 The rules presented here are intended to have no effect on the meaning of existing programs.

@@ -22,9 +22,42 @@
 
 ## Apr 3, 2019
 
+### Nullable Reference Types
+
+- Ambiguous implements/overrides with generic methods and NRTs
+
+  See https://github.com/dotnet/csharplang/issues/2378.
+  There is a breaking change in VS2019 to address, as well as a C# 8 language question
+
+- What is the nullability of a dynamic value?  Oblivious?
+
+  See also https://github.com/dotnet/roslyn/issues/29893
+
+- When we compute an annotation in the walker (e.g. type inference), do we use the context?
+
+  See also https://github.com/dotnet/roslyn/issues/33639
+
+- Inferred nullable state from a finally block
+
+  See also https://github.com/dotnet/roslyn/issues/34018
+
+### Coalescing Assignment
+
+- `??=` with `Nullable<T>` LHS and `T` (underlying VT) RHS (Fred)
+
+  See also https://github.com/dotnet/csharplang/issues/34#issuecomment-444699550 and discussion following
+
 ## Apr 1, 2019
 
+### Index/Range Feature
+
 - Pattern-based index/range translation (Jared, Stephen)
+
+#### Default Interface Methods
+
+- Is `object.MemberwiseClone()` accessible in an interface?
+
+  Please revisit this question.
 
 ## Mar 27, 2019
 
@@ -33,29 +66,14 @@ See also https://github.com/dotnet/csharplang/issues/406
 
 We now have a proposed runtime implementation for reabstraction.  See https://github.com/dotnet/coreclr/pull/23313
 
-- Reabstraction (open)
-- explicit interface abstract overrides in classes (open)
+- Reabstraction
+- explicit interface abstract overrides in classes
 
 - Is `object.MemberwiseClone()` accessible in an interface?
 
 - Confirm: `static int P { get; set; }` is an auto-property with a compiler-generated backing field?
 
 - Confirm: `partial` on a method declaration implies `private`, and no access modifier is permitted?
-
-#### Nullable Reference Types
-
-- What is the nullability of a dynamic value?  Oblivious?
-  See also https://github.com/dotnet/roslyn/issues/29893
-
-- When we compute an annotation in the walker (e.g. type inference), do we use the context?
-  See also https://github.com/dotnet/roslyn/issues/33639
-
-- Inferred nullable state from a finally block (open)
-  See also https://github.com/dotnet/roslyn/issues/34018
-
-## Mar 25, 2019
-
-- *Design review*
 
 ## Mar 13, 2019
 
@@ -90,6 +108,16 @@ See also https://github.com/dotnet/csharplang/issues/2095
 # C# Language Design Notes for 2019
 
 Overview of meetings and agendas for 2019
+
+## Mar 25, 2019
+
+[C# Design Review Notes for Mar 25, 2019](LDM-2019-03-25.md)
+
+We brought in the design review team to look at some of our recent and open decisions in C# LDM.
+
+1. Nullable reference types: shipping annotations
+2. Pattern-based indexing with `Index` and `Range`
+3. Cancellation tokens in async streams
 
 ## Mar 4, 2019
 
