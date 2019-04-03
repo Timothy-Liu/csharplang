@@ -1427,7 +1427,7 @@ public class Color
 
 如前面例子中所示，通过使用`readonly`修饰符可以声明**只读字段**（read-only fields）。对`readonly`字段的赋值要么是字段声明的一部分，要么只能在这个类的（译注：静态或实例）构造器中来完成。
 
-### Methods
+### Methods | 方法
 
 A ***method*** is a member that implements a computation or action that can be performed by an object or class. ***Static methods*** are accessed through the class. ***Instance methods*** are accessed through instances of the class.
 
@@ -1436,6 +1436,14 @@ Methods have a (possibly empty) list of ***parameters***, which represent values
 Like types, methods may also have a set of type parameters, for which type arguments must be specified when the method is called. Unlike types, the type arguments can often be inferred from the arguments of a method call and need not be explicitly given.
 
 The ***signature*** of a method must be unique in the class in which the method is declared. The signature of a method consists of the name of the method, the number of type parameters and the number, modifiers, and types of its parameters. The signature of a method does not include the return type.
+
+**方法**（methods）是用来实现类或对象所执行的运算或行为的一种成员。**静态方法**（static methods）需要通过类来访问。**实例方法**（instance methods）需要通过类的实例来访问。
+
+方法会具有一列**参数**（这列参数可能是空的）用以表示传进方法的值或者引用变量。方法还具有一个**返回值类型**，这个类型指定了这个方法将计算出来并返回的值。如果一个方法不返回任何值，那么这个方法的返回值类型是`void`。
+
+如同各种类型一样，方法也可以拥有一组类型参数。当方法被调用的时候，方法的类型参数必需被明确化。与（泛型）类型不同，（泛型）方法的类型参数经常是由方法调用时的实际参数推断出来的，而不必明确给出。
+
+在一个类中，方法的**签名**（signature）必须是唯一的。方法的签名由方法名、类型参数以及参数的个数、类型和修饰符构成。方法的签名不包含方法的返回值类型（译注：也不包含方法的参数名）。
 
 #### Parameters
 
