@@ -1445,13 +1445,19 @@ The ***signature*** of a method must be unique in the class in which the method 
 
 在一个类中，方法的**签名**（signature）必须是唯一的。方法的签名由方法名、类型参数以及参数的个数、类型和修饰符构成。方法的签名不包含方法的返回值类型（译注：也不包含方法的参数名）。
 
-#### Parameters
+#### Parameters | 参数
 
 Parameters are used to pass values or variable references to methods. The parameters of a method get their actual values from the ***arguments*** that are specified when the method is invoked. There are four kinds of parameters: value parameters, reference parameters, output parameters, and parameter arrays.
+
+参数用于将值或变量引用传入方法。方法的参数会从方法被调用时所指定的**实际参数**（arguments）上获取它们实际的值。这里有四种参数：值参数，引用参数，输出参数，和参数数组。
 
 A ***value parameter*** is used for input parameter passing. A value parameter corresponds to a local variable that gets its initial value from the argument that was passed for the parameter. Modifications to a value parameter do not affect the argument that was passed for the parameter.
 
 Value parameters can be optional, by specifying a default value so that corresponding arguments can be omitted.
+
+**值参数**（value parameter）用于传递输入参数。值参数相当于一个局部变量，只是它的初始值是从实际参数那里获得的——实际参数专为传递给参数而设定。对于值参数的更改并不会影响到实际参数。
+
+通过指定默认值给相应的值参数，这个值参数（在调用的时候）就成了可选的参数。
 
 A ***reference parameter*** is used for both input and output parameter passing. The argument passed for a reference parameter must be a variable, and during execution of the method, the reference parameter represents the same storage location as the argument variable. A reference parameter is declared with the `ref` modifier. The following example shows the use of `ref` parameters.
 
