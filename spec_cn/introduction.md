@@ -1479,6 +1479,27 @@ class Test
     }
 }
 ```
+
+**引用参数**在进行参数传递的时候既可以用于输入也可以用于输出。被传递给引用参数的实际参数必需是一个变量，而且，在方法执行的过程中，引用参数与实际参数代表的是同一个存储位置。引用参数的声明中带有`ref`修饰符。下面的例子展示了`ref`参数的使用：
+
+```csharp
+using System;
+
+class Test
+{
+    static void Swap(ref int x, ref int y) {
+        int temp = x;
+        x = y;
+        y = temp;
+    }
+
+    static void Main() {
+        int i = 1, j = 2;
+        Swap(ref i, ref j);
+        Console.WriteLine("{0} {1}", i, j);            // 输出 "2 1"
+    }
+}
+```
 An ***output parameter*** is used for output parameter passing. An output parameter is similar to a reference parameter except that the initial value of the caller-provided argument is unimportant. An output parameter is declared with the `out` modifier. The following example shows the use of `out` parameters.
 
 ```csharp
@@ -1498,6 +1519,27 @@ class Test
     }
 }
 ```
+
+**输出参数**在参数传递的时候用于输出。输出参数类似于引用参数，只是由调用者的提供的、用于初始化参数的实参值并不重要（译注：因为会在方法体里被改写）。输出参数的声明中带有`out`修饰符。下面的例子中展示了`out`参数的用法：
+
+```csharp
+using System;
+
+class Test
+{
+    static void Divide(int x, int y, out int result, out int remainder) {
+        result = x / y;
+        remainder = x % y;
+    }
+
+    static void Main() {
+        int res, rem;
+        Divide(10, 3, out res, out rem);
+        Console.WriteLine("{0} {1}", res, rem);    // 输出 "3 1"
+    }
+}
+```
+
 A ***parameter array*** permits a variable number of arguments to be passed to a method. A parameter array is declared with the `params` modifier. Only the last parameter of a method can be a parameter array, and the type of a parameter array must be a single-dimensional array type. The `Write` and `WriteLine` methods of the `System.Console` class are good examples of parameter array usage. They are declared as follows.
 
 ```csharp
@@ -1508,6 +1550,18 @@ public class Console
     ...
 }
 ```
+
+**参数数组**允许向方法传入个数不固定的实际参数。参数数组在声明的时候带有`params`修饰符。方法的参数列表中，只有最后一个参数可以是参数数组，而且这个参数的类型必须是一维数组类型。`System.Console`类的`Write`和`WriteLine`方法就是参数数组两个典型应用。它们的声明如下：
+
+```csharp
+public class Console
+{
+    public static void Write(string fmt, params object[] args) {...}
+    public static void WriteLine(string fmt, params object[] args) {...}
+    ...
+}
+```
+
 Within a method that uses a parameter array, the parameter array behaves exactly like a regular parameter of an array type. However, in an invocation of a method with a parameter array, it is possible to pass either a single argument of the parameter array type or any number of arguments of the element type of the parameter array. In the latter case, an array instance is automatically created and initialized with the given arguments. This example
 
 ```csharp
