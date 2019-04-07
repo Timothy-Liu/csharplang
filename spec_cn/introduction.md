@@ -1578,7 +1578,24 @@ args[2] = z;
 Console.WriteLine(s, args);
 ```
 
-#### Method body and local variables
+在一个使用了参数数组的方法中，参数数组的行为与标准的数组无异。然而，调用一个带有参数数组的方法时，既可以传入一个数组类型的实际参数，又可以传入任意个数的数组元素类型的实际参数。在后面的例子中，会自动生成一个数组实例并用传入的实际参数进行了初始化。请看例子：
+
+```csharp
+Console.WriteLine("x={0} y={1} z={2}", x, y, z);
+```
+
+与后面的写法是等价的：
+
+```csharp
+string s = "x={0} y={1} z={2}";
+object[] args = new object[3];
+args[0] = x;
+args[1] = y;
+args[2] = z;
+Console.WriteLine(s, args);
+```
+
+#### Method body and local variables | 方法体与局部变量
 
 A method's body specifies the statements to execute when the method is invoked.
 
@@ -1603,6 +1620,31 @@ class Squares
 C# requires a local variable to be ***definitely assigned*** before its value can be obtained. For example, if the declaration of the previous `i` did not include an initial value, the compiler would report an error for the subsequent usages of `i` because `i` would not be definitely assigned at those points in the program.
 
 A method can use `return` statements to return control to its caller. In a method returning `void`, `return` statements cannot specify an expression. In a method returning non-`void`, `return` statements must include an expression that computes the return value.
+
+方法体指定了方法被调用时将要执行的语句。
+
+在方法体中可以声明专属于方法调用的变量。这样的变量被称为**局部变量**。局部变量的声明指定了一个类型名、一个变量名、和一个可选的初始值。后面的例子中声明了一个以零为初始值的局部变量`i`和一个没有初始值的局部变量`j`。
+
+```csharp
+using System;
+
+class Squares
+{
+    static void Main() {
+        int i = 0;
+        int j;
+        while (i < 10) {
+            j = i * i;
+            Console.WriteLine("{0} x {0} = {1}", i, j);
+            i = i + 1;
+        }
+    }
+}
+```
+
+C#要求局部变量必须先被**确保赋值**（definitely assigned）才能从之获取值。例如，如果前面例子中的`i`没有初始值，编译器就会为后续对`i`的使用报告一个错误，因为`i`在程序中并没有确保被赋值。
+
+方法可以使用`return`语句把（程序执行的）控制权交还给它的调用者。在一个会返还`void`的方法中，`return`语句不能指定（被作为返还值）的表达式。在返还非`void`的方法中，`return`语句必须包含一个用于计算返还值的表达式。
 
 #### Static and instance methods
 
