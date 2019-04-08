@@ -1646,11 +1646,15 @@ C#要求局部变量必须先被**确保赋值**（definitely assigned）才能�
 
 方法可以使用`return`语句把（程序执行的）控制权交还给它的调用者。在一个会返还`void`的方法中，`return`语句不能指定（被作为返还值）的表达式。在返还非`void`的方法中，`return`语句必须包含一个用于计算返还值的表达式。
 
-#### Static and instance methods
+#### Static and instance methods | 静态与实例方法
 
 A method declared with a `static` modifier is a ***static method***. A static method does not operate on a specific instance and can only directly access static members.
 
 A method declared without a `static` modifier is an ***instance method***. An instance method operates on a specific instance and can access both static and instance members. The instance on which an instance method was invoked can be explicitly accessed as `this`. It is an error to refer to `this` in a static method.
+
+声明时带有`static`修饰符的方法称为**静态方法**。静态方法只能访问静态成员而不能在实例上进行操作。（译注：这句话新手比较难懂，特别是“在实例上操作”。）
+
+声明时不带有`static`修饰符的方法称为**实例方法**。实例方法可以在指定实例上进行操作（译注：实例方法实例上操作的是this对象，或者说“在this引用的对象上进行操作”，而this是个隐含参数，这个参数在C系语言中看不到，但在Python里是能看到的），而且既可以访问静态成员又可以访问实例成员。在其之上调用实例方法的这个实例，在实例方法中可以通过`this`来显式地访问。在静态方法中使用`this`是错误的。
 
 The following `Entity` class has both static and instance members.
 
@@ -1681,6 +1685,36 @@ Each `Entity` instance contains a serial number (and presumably some other infor
 
 The `GetNextSerialNo` and `SetNextSerialNo` static methods can access the `nextSerialNo` static field, but it would be an error for them to directly access the `serialNo` instance field.
 
+下面的`Entity`类既拥有静态成员也拥有实例成员。
+
+```csharp
+class Entity
+{
+    static int nextSerialNo;
+    int serialNo;
+
+    public Entity() {
+        serialNo = nextSerialNo++;
+    }
+
+    public int GetSerialNo() {
+        return serialNo;
+    }
+
+    public static int GetNextSerialNo() {
+        return nextSerialNo;
+    }
+
+    public static void SetNextSerialNo(int value) {
+        nextSerialNo = value;
+    }
+}
+```
+
+每个`Entity`实例都包含有一个序列号（译注：由`serialNo`字段表示），也可以假设还有一些其他的信息，只是没有显示在这里。`Entity`的构造器（看起来像是个实例方法）会用下一个可用的序列号（译注：由静态的`nextSerialNo`字段表示）来初始化新的实例。因为这个构造器是一个实例成员，所以它既可以访问实例字段`serialNo`又可以访问静态字段`nextSerialNo`。
+
+`GetNextSerialNo`和`SetNextSerialNo`两个静态方法可以访问静态字段`nextSerialNo`，但是它们无法访问实例字段`serialNo`，否则会产生错误。
+
 The following example shows the use of the `Entity` class.
 
 ```csharp
@@ -1699,6 +1733,26 @@ class Test
 }
 ```
 Note that the `SetNextSerialNo` and `GetNextSerialNo` static methods are invoked on the class whereas the `GetSerialNo` instance method is invoked on instances of the class.
+
+以下的例子展示了对`Entity`类的使用。
+
+```csharp
+using System;
+
+class Test
+{
+    static void Main() {
+        Entity.SetNextSerialNo(1000);
+        Entity e1 = new Entity();
+        Entity e2 = new Entity();
+        Console.WriteLine(e1.GetSerialNo());           // 输出"1000"
+        Console.WriteLine(e2.GetSerialNo());           // 输出"1001"
+        Console.WriteLine(Entity.GetNextSerialNo());   // 输出"1002"
+    }
+}
+```
+
+请注意，`SetNextSerialNo`和`GetNextSerialNo`静态方法是在类上被调用，而`GetSerialNo`实例方法则是在类的实例上被调用。（译注：仍然是这个“方法在……上被调用”）
 
 #### Virtual, override, and abstract methods
 
