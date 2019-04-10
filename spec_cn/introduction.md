@@ -1754,7 +1754,7 @@ class Test
 
 请注意，`SetNextSerialNo`和`GetNextSerialNo`静态方法是在类上被调用，而`GetSerialNo`实例方法则是在类的实例上被调用。（译注：仍然是这个“方法在……上被调用”）
 
-#### Virtual, override, and abstract methods
+#### Virtual, override, and abstract methods | 虚方法、重写方法和抽象方法
 
 When an instance method declaration includes a `virtual` modifier, the method is said to be a ***virtual method***. When no `virtual` modifier is present, the method is said to be a ***non-virtual method***.
 
@@ -1763,6 +1763,14 @@ When a virtual method is invoked, the ***run-time type*** of the instance for wh
 A virtual method can be ***overridden*** in a derived class. When an instance method declaration includes an `override` modifier, the method overrides an inherited virtual method with the same signature. Whereas a virtual method declaration introduces a new method, an override method declaration specializes an existing inherited virtual method by providing a new implementation of that method.
 
 An ***abstract*** method is a virtual method with no implementation. An abstract method is declared with the `abstract` modifier and is permitted only in a class that is also declared `abstract`. An abstract method must be overridden in every non-abstract derived class.
+
+当一个实例方法的声明中包含有`virtual`修饰符的时候，这个方法就是一个**虚方法**（virtual method）。当（实例方法的声明中）未出现`virtual`修饰符的时候，这个方法被称为**非虚方法**（non-virtual method）。
+
+当一个虚方法被调用的时候，实例的**运行期类型**（run-time type）决定了方法哪个实现会被调用。在一个非虚方法的调用中，实例的**编译期类型**是决定因素。
+
+在派生类中，虚方法可以被**重写**（overridden）。当一个实例方法的声明中包含有`override`修饰符的时候，这个方法就会重写继承而来的、与之签名相同的虚方法。虚方法的定义会引入一个新的方法，而重写方法（不会引入新的方法，它）的声明会通过提供一个新的实现将继承得来、已经存在的虚方法进行特殊化。
+
+**抽象方法**（abstract method）是一个没有实现的虚方法（译注：所以抽象方法也叫“纯虚方法”）。抽象方法的声明中会包含`abstract`修饰符，且抽象方法只允许声明在被`abstract`所修饰的类中（译注：即抽象类中）。在每个非抽象的派生类中，抽象方法都必须被重写（译注：或者说必须被实现）。
 
 The following example declares an abstract class, `Expression`, which represents an expression tree node, and three derived classes, `Constant`, `VariableReference`, and `Operation`, which implement expression tree nodes for constants, variable references, and arithmetic operations. (This is similar to, but not to be confused with the expression tree types introduced in [Expression tree types](types.md#expression-tree-types)).
 
