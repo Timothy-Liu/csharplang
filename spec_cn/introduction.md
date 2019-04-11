@@ -1879,6 +1879,115 @@ class Test
 }
 ```
 
+下面的例子声明了一个名为`Expression`的抽象类（它表示的是表达式树上的结点）和三个（具体）类`Constant`、`VariableReference`和`Operation`（分别表示对常量、变量引用和数学运算符这三种表达式树结点的实现）。（注意：这个例子只是与[表达式树类型](types.md#expression-tree-types)中引入的概念相似，请不要与之混淆。）（译注：都知道容易混淆了，干嘛不换个例子？）
+
+```csharp
+using System;
+using System.Collections;
+
+public abstract class Expression
+{
+    public abstract double Evaluate(Hashtable vars);
+}
+
+public class Constant: Expression
+{
+    double value;
+
+    public Constant(double value) {
+        this.value = value;
+    }
+
+    public override double Evaluate(Hashtable vars) {
+        return value;
+    }
+}
+
+public class VariableReference: Expression
+{
+    string name;
+
+    public VariableReference(string name) {
+        this.name = name;
+    }
+
+    public override double Evaluate(Hashtable vars) {
+        object value = vars[name];
+        if (value == null) {
+            throw new Exception("Unknown variable: " + name);
+        }
+        return Convert.ToDouble(value);
+    }
+}
+
+public class Operation: Expression
+{
+    Expression left;
+    char op;
+    Expression right;
+
+    public Operation(Expression left, char op, Expression right) {
+        this.left = left;
+        this.op = op;
+        this.right = right;
+    }
+
+    public override double Evaluate(Hashtable vars) {
+        double x = left.Evaluate(vars);
+        double y = right.Evaluate(vars);
+        switch (op) {
+            case '+': return x + y;
+            case '-': return x - y;
+            case '*': return x * y;
+            case '/': return x / y;
+        }
+        throw new Exception("Unknown operator");
+    }
+}
+```
+
+上面的这四个类可以用来表示数学运算的模型。例如，使用这些类的实例，表达式`x + 3`可以被表示为：
+
+```csharp
+Expression e = new Operation(
+    new VariableReference("x"),
+    '+',
+    new Constant(3));
+```
+
+`Expression`实例的`Evaluate`方法在被调用的时候，会对给定的表达式进行求值，并产生一个`double`值。这个方法以一个`Hashtable`实例为实际参数，`Hashtable`实例里容纳了变量的名字（元素实体的键）和值（元素实体的值）。`Evaluate`方法是一个抽象方法，这意味着，非抽象的派生类必须重写之、为之提供一个真正的实现。
+
+`Constant`类中对`Evaluate`方法的实现只是简单地返还所存储的常量。`VariableReference`类中的实现会在先在哈希表中查找变量的名字，然后返还查找到的值。`Operation`类的实现会先对左右两边的操作数进行求值（方法是递归地调用它们的`Evaluate`方法），然后执行给定的算数运算。
+
+下面的程序使用了`Expression`类对表达式`x * (y + 2)`进行求值，`x`与`y`的值不相同。
+
+```csharp
+using System;
+using System.Collections;
+
+class Test
+{
+    static void Main() {
+        Expression e = new Operation(
+            new VariableReference("x"),
+            '*',
+            new Operation(
+                new VariableReference("y"),
+                '+',
+                new Constant(2)
+            )
+        );
+        Hashtable vars = new Hashtable();
+        vars["x"] = 3;
+        vars["y"] = 5;
+        Console.WriteLine(e.Evaluate(vars));        // Outputs "21"
+        vars["x"] = 1.5;
+        vars["y"] = 9;
+        Console.WriteLine(e.Evaluate(vars));        // Outputs "16.5"
+    }
+}
+```
+
 #### Method overloading
 
 Method ***overloading*** permits multiple methods in the same class to have the same name as long as they have unique signatures. When compiling an invocation of an overloaded method, the compiler uses ***overload resolution*** to determine the specific method to invoke. Overload resolution finds the one method that best matches the arguments or reports an error if no single best match can be found. The following example shows overload resolution in effect. The comment for each invocation in the `Main` method shows which method is actually invoked.
