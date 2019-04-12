@@ -1980,10 +1980,10 @@ class Test
         Hashtable vars = new Hashtable();
         vars["x"] = 3;
         vars["y"] = 5;
-        Console.WriteLine(e.Evaluate(vars));        // Outputs "21"
+        Console.WriteLine(e.Evaluate(vars));        // 输出"21"
         vars["x"] = 1.5;
         vars["y"] = 9;
-        Console.WriteLine(e.Evaluate(vars));        // Outputs "16.5"
+        Console.WriteLine(e.Evaluate(vars));        // 输出"16.5"
     }
 }
 ```
@@ -2032,6 +2032,50 @@ class Test
 }
 ```
 As shown by the example, a particular method can always be selected by explicitly casting the arguments to the exact parameter types and/or explicitly supplying type arguments.
+
+方法的**重载**（overloading）允许同一个类中的多个方法具有相当的名字——只要它们的签名是唯一的即可。当编译一个对重载方法的调用时，编译器会使用**重载解析**（overload resolution）来决定具体会调用哪个方法。重载解析会找到那个与实际参数最匹配的那个方法，如果没找到这个唯一匹配的方法，那么就会报告一个错误。下面的例子展示了重载解析是如何起作用的。`Main`方法中对每个调用的注释说明了具体哪个方法被调用了。
+
+```csharp
+class Test
+{
+    static void F() {
+        Console.WriteLine("F()");
+    }
+
+    static void F(object x) {
+        Console.WriteLine("F(object)");
+    }
+
+    static void F(int x) {
+        Console.WriteLine("F(int)");
+    }
+
+    static void F(double x) {
+        Console.WriteLine("F(double)");
+    }
+
+    static void F<T>(T x) {
+        Console.WriteLine("F<T>(T)");
+    }
+
+    static void F(double x, double y) {
+        Console.WriteLine("F(double, double)");
+    }
+
+    static void Main() {
+        F();                 // 调用F()
+        F(1);                // 调用F(int)
+        F(1.0);              // 调用F(double)
+        F("abc");            // 调用F(object)
+        F((double)1);        // 调用F(double)
+        F((object)1);        // 调用F(object)
+        F<int>(1);           // 调用F<T>(T)
+        F(1, 1);             // 调用F(double, double)
+    }
+}
+```
+
+如例子所示，通过把实际参数显式地转换成形式参数的确切类型，和/或显式提供类型参数（译注：指的是泛型方法），总是能够选中一个特定的方法。
 
 ### Other function members
 
