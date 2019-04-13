@@ -2077,12 +2077,11 @@ class Test
 
 如例子所示，通过把实际参数显式地转换成形式参数的确切类型，和/或显式提供类型参数（译注：指的是泛型方法），总是能够选中一个特定的方法。
 
-### Other function members
+### Other function members | 其他函数成员
 
 Members that contain executable code are collectively known as the ***function members*** of a class. The preceding section describes methods, which are the primary kind of function members. This section describes the other kinds of function members supported by C#: constructors, properties, indexers, events, operators, and destructors.
 
 The following code shows a generic class called `List<T>`, which implements a growable list of objects. The class contains several examples of the most common kinds of function members.
-
 
 ```csharp
 public class List<T> {
@@ -2155,6 +2154,90 @@ public class List<T> {
     public event EventHandler Changed;
 
     // Operators...
+    public static bool operator ==(List<T> a, List<T> b) {
+        return Equals(a, b);
+    }
+    public static bool operator !=(List<T> a, List<T> b) {
+        return !Equals(a, b);
+    }
+}
+```
+
+在类中，包含有可执行代码的成员被统称为**函数成员**（funtion members）。前面的段落里描述了方法。方法是最主要的函数成员。本段落将描述C#所支持的其他种类的函数成员，包括：构造器、属性、索引器、事件、操作符、和析构器。
+
+下面的代码展示了名为`List<T>`的泛型类，它实现了一列可增长的对象。这个类包含了几类最常用函数成员的例子。
+
+```csharp
+public class List<T> {
+    // 常量（译注：不是函数成员）...
+    const int defaultCapacity = 4;
+
+    // 字段（译注：不是函数成员）...
+    T[] items;
+    int count;
+
+    // 构造器（译注：实例构造器，是函数成员）...
+    public List(int capacity = defaultCapacity) {
+        items = new T[capacity];
+    }
+
+    // 属性（译注：实例属性是函数成员，静态属性也是）...
+    public int Count {
+        get { return count; }
+    }
+    public int Capacity {
+        get {
+            return items.Length;
+        }
+        set {
+            if (value < count) value = count;
+            if (value != items.Length) {
+                T[] newItems = new T[value];
+                Array.Copy(items, 0, newItems, 0, count);
+                items = newItems;
+            }
+        }
+    }
+
+    // 索引器（译注：实例属性是函数成员，没有静态索引器）...
+    public T this[int index] {
+        get {
+            return items[index];
+        }
+        set {
+            items[index] = value;
+            OnChanged();
+        }
+    }
+
+    // 方法（译注：最典型的函数成员）...
+    public void Add(T item) {
+        if (count == Capacity) Capacity = count * 2;
+        items[count] = item;
+        count++;
+        OnChanged();
+    }
+    protected virtual void OnChanged() {
+        if (Changed != null) Changed(this, EventArgs.Empty);
+    }
+    public override bool Equals(object other) {
+        return Equals(this, other as List<T>);
+    }
+    static bool Equals(List<T> a, List<T> b) {
+        if (a == null) return b == null;
+        if (b == null || a.count != b.count) return false;
+        for (int i = 0; i < a.count; i++) {
+            if (!object.Equals(a.items[i], b.items[i])) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // 事件（译注：事件是函数成员，类似于属性）...
+    public event EventHandler Changed;
+
+    // 操作符（译注：操作符是函数的简记法，因此也是函数成员）...
     public static bool operator ==(List<T> a, List<T> b) {
         return Equals(a, b);
     }
