@@ -2247,15 +2247,13 @@ public class List<T> {
 }
 ```
 
-#### Constructors
+#### Constructors | 构造器
 
 C# supports both instance and static constructors. An ***instance constructor*** is a member that implements the actions required to initialize an instance of a class. A ***static constructor*** is a member that implements the actions required to initialize a class itself when it is first loaded.
 
 A constructor is declared like a method with no return type and the same name as the containing class. If a constructor declaration includes a `static` modifier, it declares a static constructor. Otherwise, it declares an instance constructor.
 
-Instance constructors can be overloaded. For example, the `List<T>
-` class declares two instance constructors, one with no parameters and one that takes an `int` parameter. Instance constructors are invoked using the `new` operator. The following statements allocate two `List<string>
-` instances using each of the constructors of the `List` class.
+Instance constructors can be overloaded. For example, the `List<T>` class declares two instance constructors, one with no parameters and one that takes an `int` parameter. Instance constructors are invoked using the `new` operator. The following statements allocate two `List<string>` instances using each of the constructors of the `List` class.
 
 ```csharp
 List<string> list1 = new List<string>();
@@ -2263,7 +2261,20 @@ List<string> list2 = new List<string>(10);
 ```
 Unlike other members, instance constructors are not inherited, and a class has no instance constructors other than those actually declared in the class. If no instance constructor is supplied for a class, then an empty one with no parameters is automatically provided.
 
-#### Properties
+C#既支持**实例构造器**（instance constructor）也支持**静态构造器**（static constructor）。实例构造器，作为一个成员，它实现了实例在被初始化的时候所要求执行的动作。静态构造器，作为一个成员，它实现了一个类被首次加载时被要求执行的动作。
+
+构造器的声明看上去很像方法的声明，只是没有返回值类型，而且构造器的名字也必须与包含它的类名保持一致。如果构造器的声明中包含有`static`修饰符，那么它声明的是一个静态构造器。否则，它声明的就是一个实例构造器。
+
+实例构造器是可被重载的。例如，下面的`List<T>`类声明了两个实例构造器，一个不带参数，另一个能接受一个`int`类型的参数。实例构造器通过`new`操作符来调用（译注：程序员没机会直接调用构造器，包括在使用反射的时候）。下面的例子中分别使用`List`类的两个实例构造器分配了两个`List<string>`的实例。
+
+```csharp
+List<string> list1 = new List<string>();
+List<string> list2 = new List<string>(10);
+```
+
+与其他成员不同，实例构造器不会被继承，所以，除了那些在真正被声明的构造器之外，类中不会具有其他的构造器。如果没有为一个类提供实例构造器，那么一个空的、不带参数的实例构造器就会被自动生成。
+
+#### Properties | 属性
 
 ***Properties*** are a natural extension of fields. Both are named members with associated types, and the syntax for accessing fields and properties is the same. However, unlike fields, properties do not denote storage locations. Instead, properties have ***accessors*** that specify the statements to be executed when their values are read or written.
 
@@ -2273,8 +2284,7 @@ A `get` accessor corresponds to a parameterless method with a return value of th
 
 A `set` accessor corresponds to a method with a single parameter named `value` and no return type. When a property is referenced as the target of an assignment or as the operand of `++` or `--`, the `set` accessor is invoked with an argument that provides the new value.
 
-The `List<T>
-` class declares two properties, `Count` and `Capacity`, which are read-only and read-write, respectively. The following is an example of use of these properties.
+The `List<T>` class declares two properties, `Count` and `Capacity`, which are read-only and read-write, respectively. The following is an example of use of these properties.
 
 ```csharp
 List<string> names = new List<string>();
@@ -2285,6 +2295,27 @@ int j = names.Capacity;          // Invokes get accessor
 Similar to fields and methods, C# supports both instance properties and static properties. Static properties are declared with the `static` modifier, and instance properties are declared without it.
 
 The accessor(s) of a property can be virtual. When a property declaration includes a `virtual`, `abstract`, or `override` modifier, it applies to the accessor(s) of the property.
+
+**属性**（properties）是字段的自然延伸（译注：擦，好有哲学意境！）。它们都是有名字的成员、都有与之相关联的类型，而且访问它们时的语法也是一样的（译注：甚至包括++、--这样的操作符）。 然而，与字段不同，属性并不意味着存储空间。相反，属性具有**访问器**（accessors）用以指定当对其读取或写入值时会被执行的语句。
+
+属性的声明看上去很像字段，不同的是属性的声明中会以放在一对花括号（`{`和`}` ）中的`get`访问器和/或`set`访问器来结束，而不是以一个分号（`;`）来结束。即带有`get`访问器又带有`set`访问器的属性称为**读写属性**（read-write property）；只有`get`访问器的属性称为**只读属性**（read-only property）；只有`set`访问器的属性称为**只写属性**（write-only property）。（译注：在实际工作中从来没使用过只写属性。）
+
+`get`访问器对应于一个没有参数的方法，这个方法会返还一个与属性类型一致的值。在不被作为赋值目标的时候，当一个属性在表达式中被引用时，属性的`get`访问器就会被调用并计算出属性的值。（译注：从属性身上读取值的时候，`get`就会被调用。反之，向属性赋值、写入值的时候，`get`就会被调用。）
+
+`set`访问器也对应于一个方法，这个方法带有一个名为`value`的参数而且没有返还值类型。当一个属性被当作赋值的目标或者`++`、`--`操作符的操作数时`set`访问器就会被调用，并且会由一个实际参数提供属性的新值（译注：新值就保存在`value`里，`value`是一个上下文关键字）。
+
+`List<T>`类声明了两个属性，`Count`和`Capacity`，`Count`是只读属性，`Capacity`是读写属性。下面的例子中展示了如何使用这两个属性：
+
+```csharp
+List<string> names = new List<string>();
+names.Capacity = 100;            // 调用`set`访问器
+int i = names.Count;             // 调用`get`访问器
+int j = names.Capacity;          // 调用`get`访问器
+```
+
+与字段和方法类似，C#既支持实例属性也支持静态属性。静态属性的声明带有`static`修饰符，而实例属性的声明则不带`static`修饰符。
+
+属性的访问器可以是虚的。当属性的声明带有`virtual`、`abstract`或`override`修饰符的时候，即为这种情况。
 
 #### Indexers
 
@@ -2313,8 +2344,7 @@ Within a class that declares an event member, the event behaves just like a fiel
 The `List<T>
 ` class declares a single event member called `Changed`, which indicates that a new item has been added to the list. The `Changed` event is raised by the `OnChanged` virtual method, which first checks whether the event is `null` (meaning that no handlers are present). The notion of raising an event is precisely equivalent to invoking the delegate represented by the event—thus, there are no special language constructs for raising events.
 
-Clients react to events through ***event handlers***. Event handlers are attached using the `+=` operator and removed using the `-=` operator. The following example attaches an event handler to the `Changed` event of a `List<string>
-`.
+Clients react to events through ***event handlers***. Event handlers are attached using the `+=` operator and removed using the `-=` operator. The following example attaches an event handler to the `Changed` event of a `List<string>`.
 
 ```csharp
 using System;
