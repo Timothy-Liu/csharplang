@@ -2317,7 +2317,7 @@ int j = names.Capacity;          // 调用`get`访问器
 
 属性的访问器可以是虚的。当属性的声明带有`virtual`、`abstract`或`override`修饰符的时候，即为这种情况。
 
-#### Indexers
+#### Indexers | 索引器
 
 An ***indexer*** is a member that enables objects to be indexed in the same way as an array. An indexer is declared like a property except that the name of the member is `this` followed by a parameter list written between the delimiters `[` and `]`. The parameters are available in the accessor(s) of the indexer. Similar to properties, indexers can be read-write, read-only, and write-only, and the accessor(s) of an indexer can be virtual.
 
@@ -2335,7 +2335,24 @@ for (int i = 0; i < names.Count; i++) {
 ```
 Indexers can be overloaded, meaning that a class can declare multiple indexers as long as the number or types of their parameters differ.
 
-#### Events
+**索引器**（indexer）这种成员能够让对象像被数组一样被索引。索引器的声明很像属性，但索引器的名字必须是`this`，并在后面跟上放在一对方括号（`[`和`]`）中的参数列表。这些参数可以在访问器中被使用。与属性类似，索引器也可以是读写的、只读的或只写的，而且索引器的访问器可以是虚的。
+
+`List`类声明的唯一一个索引器可以接收一个`int`类型参数。这个索引器使得`List`的实例可以使用`int`值进行索引。如下面的例子：
+
+```csharp
+List<string> names = new List<string>();
+names.Add("Liz");
+names.Add("Martha");
+names.Add("Beth");
+for (int i = 0; i < names.Count; i++) {
+    string s = names[i];
+    names[i] = s.ToUpper();
+}
+```
+
+索引器可以被重载，也就是说，一个类可以声明多个索引器，只要索引器参数的个数或类型不同即可。（译注：我还真没见过多个参数的索引器，回头搞一个玩玩儿。）
+
+#### Events | 事件
 
 An ***event*** is a member that enables a class or object to provide notifications. An event is declared like a field except that the declaration includes an `event` keyword and the type must be a delegate type.
 
@@ -2343,6 +2360,10 @@ Within a class that declares an event member, the event behaves just like a fiel
 
 The `List<T>
 ` class declares a single event member called `Changed`, which indicates that a new item has been added to the list. The `Changed` event is raised by the `OnChanged` virtual method, which first checks whether the event is `null` (meaning that no handlers are present). The notion of raising an event is precisely equivalent to invoking the delegate represented by the event—thus, there are no special language constructs for raising events.
+
+**事件**（event）这种成员使得类或对象具备了通知（其他类或对象）的能力。事件的声明很像一个字段，但事件的声明中会带有`event`关键字，而且必须是委托类型的。
+
+在声明有事件的类中，事件的行为很像一个委托类型的字段（这种声明方式不能用于声明抽象事件，也不必提供事件的访问器）（译注：事件的完整声明的确用的不多）。这个字段存储着一个对委托（实例）的引用，而这个委托实例则代表着被分配给事件的事件的处理器。如果事件处理器不存在，那么这个委托字段的值为`null`。
 
 Clients react to events through ***event handlers***. Event handlers are attached using the `+=` operator and removed using the `-=` operator. The following example attaches an event handler to the `Changed` event of a `List<string>`.
 
@@ -2369,14 +2390,37 @@ class Test
 ```
 For advanced scenarios where control of the underlying storage of an event is desired, an event declaration can explicitly provide `add` and `remove` accessors, which are somewhat similar to the `set` accessor of a property.
 
-#### Operators
+事件的客户（译注：也叫“订阅者”）通过**事件处理器**（event handlers）来对事件做出反应（译注：又称“响应事件”）。使用`+=`操作符可以为事件添加事件处理器，使用`-=`操作符则可以移除事件处理器。下面的例子展示了如何将一个事件处理器附加到了`List<string>`的`Changed`事件上：
+
+```csharp
+using System;
+
+class Test
+{
+    static int changeCount;
+
+    static void ListChanged(object sender, EventArgs e) {
+        changeCount++;
+    }
+
+    static void Main() {
+        List<string> names = new List<string>();
+        names.Changed += new EventHandler(ListChanged);
+        names.Add("Liz");
+        names.Add("Martha");
+        names.Add("Beth");
+        Console.WriteLine(changeCount);        // 输出"3"
+    }
+}
+```
+
+在遇到某些高级场景时，我们可以在事件的声明中控制底层（委托字段）的存储，方法是在事件的声明中显式地提供`add`和`remove`访问器——它们有点类似于属性的`set`访问器。
+
+#### Operators | 操作符
 
 An ***operator*** is a member that defines the meaning of applying a particular expression operator to instances of a class. Three kinds of operators can be defined: unary operators, binary operators, and conversion operators. All operators must be declared as `public` and `static`.
 
-The `List<T>
-` class declares two operators, `operator==` and `operator!=`, and thus gives new meaning to expressions that apply those operators to `List` instances. Specifically, the operators define equality of two `List<T>
-` instances as comparing each of the contained objects using their `Equals` methods. The following example uses the `==` operator to compare two `List<int>
-` instances.
+The `List<T>` class declares two operators, `operator==` and `operator!=`, and thus gives new meaning to expressions that apply those operators to `List` instances. Specifically, the operators define equality of two `List<T>` instances as comparing each of the contained objects using their `Equals` methods. The following example uses the `==` operator to compare two `List<int>` instances.
 
 ```csharp
 using System;
@@ -2397,17 +2441,44 @@ class Test
 }
 ```
 
-The first `Console.WriteLine` outputs `True` because the two lists contain the same number of objects with the same values in the same order. Had `List<T>
-` not defined `operator==`, the first `Console.WriteLine` would have output `False` because `a` and `b` reference different `List<int>
-` instances.
+The first `Console.WriteLine` outputs `True` because the two lists contain the same number of objects with the same values in the same order. Had `List<T>` not defined `operator==`, the first `Console.WriteLine` would have output `False` because `a` and `b` reference different `List<int>` instances.
 
-#### Destructors
+**操作符**（operator）这种成员定义了当某种表达式操作符应用在类的实例上时的意义。我们可以定义三种操作符：单目操作符（unary operators）、双目操作符（binary operators）和类型转换操作符（conversion operators）。所有操作符都必须被声明为`public`和`static`的。
+
+`List<T>`类声明了两个操作符，`operator==`和`operator!=`，借此给出了将这些操作符应用在`List`实例上时表达式所具有的新的意义。具体而言，这两个操作符定义了两个`List<T>`实例的相等性是通过调用所包含元素的`Equals`方法、比较每个元素对象而得来的。下面的例子展示了如何使用`==`操作符来比较两个`List<int>`的实例：
+
+```csharp
+using System;
+
+class Test
+{
+    static void Main() {
+        List<int> a = new List<int>();
+        a.Add(1);
+        a.Add(2);
+        List<int> b = new List<int>();
+        b.Add(1);
+        b.Add(2);
+        Console.WriteLine(a == b);        // 输出"True"
+        b.Add(3);
+        Console.WriteLine(a == b);        // 输出"False"
+    }
+}
+```
+
+第一个`Console.WriteLine`的输出为`True`，因为两个`List`实例中包含了同样多个对象，而且这些对象的值和顺序都是一样的。如果`List<T>`没有定义`operator==`，那么第一个`Console.WriteLine`就会输出`False`，因为`a`和`b`引用着两个不同的`List<int>`实例。
+
+#### Destructors | 析构器
 
 A ***destructor*** is a member that implements the actions required to destruct an instance of a class. Destructors cannot have parameters, they cannot have accessibility modifiers, and they cannot be invoked explicitly. The destructor for an instance is invoked automatically during garbage collection.
 
 The garbage collector is allowed wide latitude in deciding when to collect objects and run destructors. Specifically, the timing of destructor invocations is not deterministic, and destructors may be executed on any thread. For these and other reasons, classes should implement destructors only when no other solutions are feasible.
 
 The `using` statement provides a better approach to object destruction.
+
+**析构器**这种成员实现了类的实例在被销毁时需要执行的动作。析构器既不能带有参数也没有可访问性修饰符，而且不能显式地被调用。实例的析构器会在垃圾收集期间被自动调用。
+
+垃圾收集器在决定何时收集对象并执行析构器方面具有很大的自由度。具体来说就是，析构器器被调用的时机是不确定的，而且有可能在被任何线程中初调用。介于这些以及其他的原因，仅当没有其他合适的解决方案时，类才会考虑实现析构器。
 
 ## Structs
 
