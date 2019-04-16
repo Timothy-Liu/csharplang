@@ -2480,7 +2480,7 @@ The `using` statement provides a better approach to object destruction.
 
 垃圾收集器在决定何时收集对象并执行析构器方面具有很大的自由度。具体来说就是，析构器器被调用的时机是不确定的，而且有可能在被任何线程中初调用。介于这些以及其他的原因，仅当没有其他合适的解决方案时，类才会考虑实现析构器。
 
-## Structs
+## Structs | 结构体
 
 Like classes, ***structs*** are data structures that can contain data members and function members, but unlike classes, structs are value types and do not require heap allocation. A variable of a struct type directly stores the data of the struct, whereas a variable of a class type stores a reference to a dynamically allocated object. Struct types do not support user-specified inheritance, and all struct types implicitly inherit from type `object`.
 
@@ -2520,6 +2520,46 @@ struct Point
 ```
 Now, only one object is instantiated—the one for the array—and the `Point` instances are stored in-line in the array.
 
+与类类似，**结构体**（structs）也是一种可以容纳数据成员和函数成员的数据结构；但与类不同的是，结构体是值类型，并且不要求在堆上进行（为对象）分配（内存）。结构体类型的变量会直接存储结构体数据，而类类型的变量存储的则是对动态分配的对象的引用。结构体类型不支持用户自定义的继承，并且，所有结构体类型都隐式地继承了`object`类型。
+
+特别是对于那些具有值语义（???）的小型数据类型，结构体十分有用。复杂的数字、坐标系中的点、以及字典中的键-值对，都是结构体很好的例子。针对小型数据类型使用结构体而非类，会在程序运行时内存分配大小方面产生巨大的不同。例如，在下面的程序创建并初始化了包含有100个点的数组。如果把`Point`实现成一个类，那么就会创建101个独立的对象——数组本身是一个对象，还要为每个数组元素创建一个对象。
+
+```csharp
+class Point
+{
+    public int x, y;
+
+    public Point(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+}
+
+class Test
+{
+    static void Main() {
+        Point[] points = new Point[100];
+        for (int i = 0; i < 100; i++) points[i] = new Point(i, i);
+    }
+}
+```
+
+但如果把`Point`转换成结构体，
+
+```csharp
+struct Point
+{
+    public int x, y;
+
+    public Point(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+}
+```
+
+此时就只有一个对象被实例化了——即那个数组对象——`Point`的实例们则是就地存储在数组实例里。
+
 Struct constructors are invoked with the `new` operator, but that does not imply that memory is being allocated. Instead of dynamically allocating an object and returning a reference to it, a struct constructor simply returns the struct value itself (typically in a temporary location on the stack), and this value is then copied as necessary.
 
 With classes, it is possible for two variables to reference the same object and thus possible for operations on one variable to affect the object referenced by the other variable. With structs, the variables each have their own copy of the data, and it is not possible for operations on one to affect the other. For example, the output produced by the following code fragment depends on whether `Point` is a class or a struct.
@@ -2534,11 +2574,30 @@ If `Point` is a class, the output is `20` because `a` and `b` reference the same
 
 The previous example highlights two of the limitations of structs. First, copying an entire struct is typically less efficient than copying an object reference, so assignment and value parameter passing can be more expensive with structs than with reference types. Second, except for `ref` and `out` parameters, it is not possible to create references to structs, which rules out their usage in a number of situations.
 
-## Arrays
+结构体的构造器会随着`new`操作符的使用而被调用，但这并不意味着会有（对象所占用的）内存被分配。与（对引用类型使用`new`操作符会）动态分配对象并返还一个对象的引用不同，结构体的构造器会返还值本身（通常是一个位于栈上的临时存储位置）（译注：构造器啥时候有返回值了？创建对象不是`new`的事儿吗？），随后这个值会在必要的时候被拷贝（译注：装箱的时候）。
+
+使用类的时候，允许两个变量引用着同一个对象，所以可以通过操作一个变量来影响到由另一个变量所引用着的对象（译注：因为两个变量引用的是同一个对象）。当使用结构体的时候，每个变量都拥有属于自己的（独立的）数据拷贝，所以不可能发生操作一个变量而影响到另一个的情况了。例如，下面的代码所产生的输出就取决于`Point`是类还是结构体：
+
+```csharp
+Point a = new Point(10, 10);
+Point b = a;
+a.x = 20;
+Console.WriteLine(b.x);
+```
+
+如果`Point`是类，那么输出会是`20`，因为`a`和`b`引用的是同一个对象。如果`Point`是结构体，那么输入会是`10`，因为由`a`向`b`的赋值会创建（`a`中）值的一个拷贝，并且这个拷贝不会被后续对`a.x`的赋值所影响。
+
+前面这个例子同时也指出了结构体的两个局限性。首先，复制整个结构体（对象）明显不如仅复制一个对象引用效率高，所以，结构体之间的赋值和值参数传递明显要比引用类型之间的代替高。其次，抛开`ref`和`out`参数不谈，（目前还）无法创建对结构体（值/对象）的引用，因此结构体在很多情况下就不适用了。
+
+## Arrays | 数组
 
 An ***array*** is a data structure that contains a number of variables that are accessed through computed indices. The variables contained in an array, also called the ***elements*** of the array, are all of the same type, and this type is called the ***element type*** of the array.
 
 Array types are reference types, and the declaration of an array variable simply sets aside space for a reference to an array instance. Actual array instances are created dynamically at run-time using the `new` operator. The `new` operation specifies the ***length*** of the new array instance, which is then fixed for the lifetime of the instance. The indices of the elements of an array range from `0` to `Length - 1`. The `new` operator automatically initializes the elements of an array to their default value, which, for example, is zero for all numeric types and `null` for all reference types.
+
+**数组**（array）是一种能够容纳多个变量的数据结构，这些变量可以通过计算出来的索引来访问。数组中所包含的变量又被称为数组的**元素**（elements），它们的类型是相同的，这个类型被称为数组的**元素类型**（element type）。
+
+数组类型是引用类型(译注：因为是类啊！)，所以数组变量的声明只会得到足以容纳一个对数组实例的引用所需的空间。真正的数组实例是在运行时被`new`操作符创建的。`new`操作符指定了新的数组实例的**长度**（length）。在数组对象的整个生命周期中，它的长度是固定不变的。数组元素索引的范围是`0`到`Length - 1`（译注：长度减1，或者说元素个数减1）。`new`操作符会自动将元素的值初始化为它们的默认值（译注：参见`default`操作符），这意味着，对于所有数字类型来说是零（译注：整数的话是`0`，浮点数的话是`0.0`），对于引用类型来说是`null`（译注：即内存清零）。
 
 The following example creates an array of `int` elements, initializes the array, and prints out the contents of the array.
 
