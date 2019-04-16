@@ -2655,6 +2655,74 @@ t[1] = 2;
 t[2] = 3;
 int[] a = t;
 ```
+
+下面的例子创建了一个元素为`int`的数组，然后初始化了这个数组，最后把这个数组中的内容打印了出来。
+
+```csharp
+using System;
+
+class Test
+{
+    static void Main() {
+        int[] a = new int[10];
+        for (int i = 0; i < a.Length; i++) {
+            a[i] = i * i;
+        }
+        for (int i = 0; i < a.Length; i++) {
+            Console.WriteLine("a[{0}] = {1}", i, a[i]);
+        }
+    }
+}
+```
+
+This example creates and operates on a ***single-dimensional array***. C# also supports ***multi-dimensional arrays***. The number of dimensions of an array type, also known as the ***rank*** of the array type, is one plus the number of commas written between the square brackets of the array type. The following example allocates a one-dimensional, a two-dimensional, and a three-dimensional array.
+
+这个例子创建并操作的是一个**一维数组**（single-dimensional array）。C#也支持**多维数组**（multi-dimensional arrays）（译注：是真正的多维数组哦！）。数组类型的维度数，也称数组类型的**级**（rank），等于方括号中的逗号数量加一。下面的例子分配了一个一维数组、一个二维数组、和一个三维数组。
+
+```csharp
+int[] a1 = new int[10];
+int[,] a2 = new int[10, 5];
+int[,,] a3 = new int[10, 5, 2];
+```
+
+数组`a1`包含有10个元素，数组`a2`包含有50个元素（10 × 5），数组`a3`包含100个元素（10 × 5 × 2）。
+
+数组元素的类型可以是任意的，包括数组类型。元素也是数组类型的数组，被称为**锯齿状数组**（jugged array），因为作为元素的数组不一定都具有相同的长度。下面的例子分配了一个数组，这个数组的元素是元素为`int`的数组：
+
+```csharp
+int[][] a = new int[3][];
+a[0] = new int[10];
+a[1] = new int[5];
+a[2] = new int[20];
+```
+
+代码的第一行创建了一个具有三个元素的数组，每个元素的类型都是`int[]`且初始值为`null`。接下来的代码将对不同长度数组实例的引用赋值给了这三个数组元素（译注：原文不精确，因为这时候已经不是初始化了）。
+
+在创建数组实例的时候，`new`操作符允许使用**数组初始化器**（array initializer）来初始化数组元素的值。数组初始化器是一列放在一对花括号（`{`和`}`）中的表达式（译注：表达式即是值，值即是表达式）。下面的代码分配并用三个元素初始化了一个`int[]`。
+
+```csharp
+int[] a = new int[] {1, 2, 3};
+```
+
+请注意，数组的长度是由花括号中元素的个数推断出来的。数组类型的局部变量和字段的声明可以变得更短，方法是省略对数组类型的重复：
+
+```csharp
+int[] a = {1, 2, 3};
+```
+
+前面这两个例子都等价于下面这个例子（译注：感觉有点儿画蛇添足）：
+
+
+```csharp
+int[] t = new int[3];
+t[0] = 1;
+t[1] = 2;
+t[2] = 3;
+int[] a = t;
+```
+
+（译注：应该在这里展示一下多维数组的初始化。）
+
 ## Interfaces
 
 An ***interface*** defines a contract that can be implemented by classes and structs. An interface can contain methods, properties, events, and indexers. An interface does not provide implementations of the members it defines—it merely specifies the members that must be supplied by classes or structs that implement the interface.
