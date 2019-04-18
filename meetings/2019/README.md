@@ -2,48 +2,15 @@
 
 ## Schedule ASAP
 
-### Async Iterators
-
-- Confirm change of behavior for cancellation tokens
-
-  See also https://github.com/dotnet/csharplang/issues/2434
-
 ### Nullable Reference Types
-
-- Default constraint for type parameters declared in a `#nullable disable`d context.
-
-  See also https://github.com/dotnet/csharplang/issues/2398
-  (Will possibly be resolved by offline)
-
-- Inheriting constraints declared in a disabled context with an override in an enabled context.
-
-  See also https://github.com/dotnet/roslyn/issues/29979
-
-- Type parameters declared in a `#nullable disable`d context but referenced in a `#nullable enabled`d context.
-
-  See also https://github.com/dotnet/csharplang/issues/2409
-
-### Coalescing Assignment
-
-- `??=` with `Nullable<T>` LHS and `T` (underlying VT) RHS (Fred)
-
-  See also https://github.com/dotnet/csharplang/issues/34#issuecomment-444699550 and discussion following
-
-### Index/Range Feature
-
-- Pattern-based index/range translation (Jared, Stephen)
-
-  (Will possibly be resolved by offline)
-
-### Nullable Reference Types
-
-- When we compute an annotation in the walker (e.g. type inference), do we use the context?
-
-  See also https://github.com/dotnet/roslyn/issues/33639
 
 - Inferred nullable state from a finally block
 
   See also https://github.com/dotnet/roslyn/issues/34018
+
+- What is the implied constraint for a type parameter of a partial?
+
+  See also https://github.com/dotnet/csharplang/issues/2450
 
 ### Pattern-Matching
 
@@ -51,11 +18,12 @@
 
   See also https://github.com/dotnet/csharplang/issues/2389
 
+### Async Iterators
+
+- Allowing pattern-based `foreach` and `await foreach` to bind to an extension `GetEnumerator`/`GetAsyncEnumerator` and `MoveNext`/`MoveNextAsync` (Julien/Chris)
+
 ## Schedule when convenient
 
-- Nullable Reference Types: Open LDM Issues https://github.com/dotnet/csharplang/issues/2201
-- Default Implementation Members: Open LDM Issues https://github.com/dotnet/csharplang/issues/406
-- Allowing pattern-based `foreach` and `await foreach` to bind to an extension `GetEnumerator`/`GetAsyncEnumerator` and `MoveNext`/`MoveNextAsync` (Julien/Chris)
 - Syntax of positional records/primary constructors (Andy)
 - Discussion of refreshing language spec (Neal)
 
@@ -67,22 +35,32 @@
 
 ## Apr 17, 2019
 
-## Apr 15, 2019
-
 # C# Language Design Notes for 2019
 
 Overview of meetings and agendas for 2019
 
+## Apr 15, 2019
+
+[C# Language Design Notes for Apr 15, 2019](LDM-2019-04-15.md)
+
+1. CancellationToken in iterators
+2. Implied nullable constraints in nullable disabled code
+3. Inheriting constraints in nullable disabled code
+4. Declarations with constraints declared in #nullable disabled code
+5. Result type of `??=` expression
+6. Use annotation context to compute the annotations?
+7. Follow-up decisions for pattern-based Index/Range
+
 ## Apr 3, 2019
 
-[C# Design Review Notes for Apr 3, 2019](LDM-2019-04-03.md)
+[C# Language Design Notes for Apr 3, 2019](LDM-2019-04-03.md)
 
 1. Ambiguous implementations/overrides with generic methods and NRTs
 2. NRT and `dynamic`
 
 ## Apr 1, 2019
 
-[C# Design Review Notes for Apr 1, 2019](LDM-2019-04-01.md)
+[C# Language Design Notes for Apr 1, 2019](LDM-2019-04-01.md)
 
 1. Pattern-based Index/Range translation
 
@@ -92,7 +70,7 @@ an interface?
 
 ## Mar 27, 2019
 
-[C# Design Review Notes for Mar 27, 2019](LDM-2019-03-27.md)
+[C# Language Design Notes for Mar 27, 2019](LDM-2019-03-27.md)
 
 1. Switch expression syntax
 
