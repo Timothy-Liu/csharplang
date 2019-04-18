@@ -2723,7 +2723,7 @@ int[] a = t;
 
 （译注：应该在这里展示一下多维数组的初始化。）
 
-## Interfaces
+## Interfaces | 接口
 
 An ***interface*** defines a contract that can be implemented by classes and structs. An interface can contain methods, properties, events, and indexers. An interface does not provide implementations of the members it defines—it merely specifies the members that must be supplied by classes or structs that implement the interface.
 
@@ -2791,6 +2791,79 @@ EditBox editBox = new EditBox();
 editBox.Paint();                        // Error, no such method
 IControl control = editBox;
 control.Paint();                        // Ok
+```
+
+**接口**定义了可被类和结构体实现的契约。接口可以包含方法、属性、事件、和索引器。在定义接口的时候，不必提供成员的实现（译注：C#新版有默认实现）。这些成员基本上勾勒出了当类或结构体实现这个接口的时候所必须实现的成员的一个轮廓。
+
+接口可以进行**多继承**。下面的例子中，`IComboBox`接口就继承了`ITextBox`和`IListBox`两个接口（译注：接口之间叫“继承”，接口与类之间叫“实现”）。
+
+```csharp
+interface IControl
+{
+    void Paint();
+}
+
+interface ITextBox: IControl
+{
+    void SetText(string text);
+}
+
+interface IListBox: IControl
+{
+    void SetItems(string[] items);
+}
+
+interface IComboBox: ITextBox, IListBox {}
+```
+
+类和结构体可以实现多个接口。下面的例子中，`EditBox`类就实现了`IControl`和`IDataBound`两个接口。
+
+```csharp
+interface IDataBound
+{
+    void Bind(Binder b);
+}
+
+public class EditBox: IControl, IDataBound
+{
+    public void Paint() {...}
+    public void Bind(Binder b) {...}
+}
+```
+
+当一个类或结构体实现了某个接口的时候，这个类或结构体的实例可以被隐式地转换成此接口类型（译注：“是一个”原则）。例如：
+
+```csharp
+EditBox editBox = new EditBox();
+IControl control = editBox;
+IDataBound dataBound = editBox;
+```
+
+当一个实例不能静态地得知是否实现了某个接口的时候，那就需要借助动态类型转换了（译注：其实就是显式类型转换）。例如，在下面的例子就进行了动态类型转换，从而获取到对象对`IControl`和`IDataBound`两个接口的实现。因为对象的类型是`EditBox`，所以这次类型转换是成功的。（译注：这种“硬转换”在实际工作中是不推荐的，而是应该使用`is`或`as`操作符。）
+
+```csharp
+object obj = new EditBox();
+IControl control = (IControl)obj;
+IDataBound dataBound = (IDataBound)obj;
+```
+
+在前面的例子中，`EditBox`类中来自`IControl`接口的`Paint`方法和来自`IDataBound`接口的`Bind`方法均被实现为了`public`成员。C#同时也支持**显式接口成员实现**，以避免接口成员成为`public`的。显式接口成员实现在书写的时候必需使用全限定名来书写接口的成员。如后面的例子所示，`EditBox`类可以使用显式成员实现的方式来实现`IControl.Paint`和`IDataBound.Bind`方法：
+
+```csharp
+public class EditBox: IControl, IDataBound
+{
+    void IControl.Paint() {...}
+    void IDataBound.Bind(Binder b) {...}
+}
+```
+
+显式接口成员只能通过接口类型来访问。例如，要访问由`EditBox`类提供的`IControl.Paint`方法则必须先把对`EditBox`的引用（译注：即`EditBox`类型的引用变量）转换成`IControl`接口类型。
+
+```csharp
+EditBox editBox = new EditBox();
+editBox.Paint();                        // 错误：无此方法
+IControl control = editBox;
+control.Paint();                        // 正确
 ```
 
 ## Enums
