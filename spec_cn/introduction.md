@@ -2866,7 +2866,7 @@ IControl control = editBox;
 control.Paint();                        // 正确
 ```
 
-## Enums
+## Enums | 枚举
 
 An ***enum type*** is a distinct value type with a set of named constants. The following example declares and uses an enum type named `Color` with three constant values, `Red`, `Green`, and `Blue`.
 
@@ -2927,6 +2927,73 @@ int i = (int)Color.Blue;        // int i = 2;
 Color c = (Color)2;             // Color c = Color.Blue;
 ```
 The default value of any enum type is the integral value zero converted to the enum type. In cases where variables are automatically initialized to a default value, this is the value given to variables of enum types. In order for the default value of an enum type to be easily available, the literal `0` implicitly converts to any enum type. Thus, the following is permitted.
+
+```csharp
+Color c = 0;
+```
+
+**枚举类型**是一种独特的值类型，它拥有一个由带名字的常量所组成的集合。下面的例子中声明并使用了一个名为`Color`的枚举类型，而且这个枚举类型具有三个常量值：`Red`、`Green`和`Blue`。
+
+```csharp
+using System;
+
+enum Color
+{
+    Red,
+    Green,
+    Blue
+}
+
+class Test
+{
+    static void PrintColor(Color color) {
+        switch (color) {
+            case Color.Red:
+                Console.WriteLine("Red");
+                break;
+            case Color.Green:
+                Console.WriteLine("Green");
+                break;
+            case Color.Blue:
+                Console.WriteLine("Blue");
+                break;
+            default:
+                Console.WriteLine("Unknown color");
+                break;
+        }
+    }
+
+    static void Main() {
+        Color c = Color.Red;
+        PrintColor(c);
+        PrintColor(Color.Blue);
+    }
+}
+```
+
+每个枚举类型都具有一个相应的整数类型，称为这个枚举类型的**底层类型**。如果一个枚举类型没有明确地声明底层类型，那么它的底层类型就是`int`类型。一个枚举类型值的存储格式和取值范围都由其底层类型决定。枚举类型可以具有的一个集合的值并不受枚举个数的限制。具体来说就是，任意底层类型的值都可以通过类型转换成这一枚举类型的值，并且是此枚举类型的一个独特的值（译注：还真没试过！）。
+
+下面的例子以`sbyte`作为底层类型声明了一个名为`Alignment`的枚举类型。
+
+```csharp
+enum Alignment: sbyte
+{
+    Left = -1,
+    Center = 0,
+    Right = 1
+}
+```
+
+如前面例子所示，枚举成员的声明可以包含一个常量表达式用以指定这个成员的值。每个枚举成员的常量值都必须落在底层类型的取值范围内。当一个枚举成员没有被显式地指派一个值的时候，如果它是枚举类型的第一个成员，那么就被赋予零值，否则就按照文本顺序依次在前面的枚举值上加一。
+
+使用显式类型转换，枚举类型的值可以被转换为整数类型的值，反之亦然。如下例所示：
+
+```csharp
+int i = (int)Color.Blue;        // int i = 2;
+Color c = (Color)2;             // Color c = Color.Blue;
+```
+
+枚举类型的默认值就是整数零转换后所对应的枚举值。有的时候，变量会被自动地初始化为一个默认值（译注：比如字段），那么，零值就是赋给枚举类型变量的默认值。为了让枚举类型的默认值便于使用，常值`0`可以被隐式地转换成任何枚举类型（译注：强调是“隐式转换”；另外，一个枚举类型如果没有与零值对应的成员，怎么办？）。因此，下面的代码是允许的：
 
 ```csharp
 Color c = 0;
