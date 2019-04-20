@@ -2999,7 +2999,7 @@ Color c = (Color)2;             // Color c = Color.Blue;
 Color c = 0;
 ```
 
-## Delegates
+## Delegates | 委托
 
 A ***delegate type*** represents references to methods with a particular parameter list and return type. Delegates make it possible to treat methods as entities that can be assigned to variables and passed as parameters. Delegates are similar to the concept of function pointers found in some other languages, but unlike function pointers, delegates are object-oriented and type-safe.
 
@@ -3054,6 +3054,62 @@ Delegates can also be created using anonymous functions, which are "inline metho
 double[] doubles =  Apply(a, (double x) => x * 2.0);
 ```
 An interesting and useful property of a delegate is that it does not know or care about the class of the method it references; all that matters is that the referenced method has the same parameters and return type as the delegate.
+
+**委托**代表着对方法的引用， 被引用的方法需要具有指定的参数列表的返回值类型。有了委托，方法就可以被像变量或参数这样的编程实体（entites）来对待——可以像变量一样被赋值，也可以像被参数一样被传递。委托与其他语言中的函数指针的概念略同，但委托是面向对象的且是类型安全的。
+
+接下来的例子声明并使用了一个叫`Function`的委托类型。（译注：我们说“一个委托”的时候，要看上下文，有的时候指的是一个委托类型，有的时候指的是一个委托实例。）
+
+```csharp
+using System;
+
+delegate double Function(double x);
+
+class Multiplier
+{
+    double factor;
+
+    public Multiplier(double factor) {
+        this.factor = factor;
+    }
+
+    public double Multiply(double x) {
+        return x * factor;
+    }
+}
+
+class Test
+{
+    static double Square(double x) {
+        return x * x;
+    }
+
+    static double[] Apply(double[] a, Function f) {
+        double[] result = new double[a.Length];
+        for (int i = 0; i < a.Length; i++) result[i] = f(a[i]);
+        return result;
+    }
+
+    static void Main() {
+        double[] a = {0.0, 0.5, 1.0};
+        double[] squares = Apply(a, Square);
+        double[] sines = Apply(a, Math.Sin);
+        Multiplier m = new Multiplier(2.0);
+        double[] doubles =  Apply(a, m.Multiply);
+    }
+}
+```
+
+一个`Function`委托类型的实例可以引用任何接收一个`double`类型参数并返还一个`double`类型值的方法。`Apply`方法将给定的`Function`委托实例应用在`double[]`的每个元素上，并且将结果返还到`double[]`里。在`Main`方法中，`Apply`方法被用于将三个不同的方法应用在一个`double[]`上。
+
+委托实例既可以引用静态方法（如上例中的`Square`及`Math.Sin`）， 也可以引用实例方法（如上例中的`m.Multiply`）。引用着实例方法的委托其实也引用着包含着这个方法的对象，当这个实例方法通过委托被调用的时候，这个被引用着的对象就变成了调用中的`this`。（译注：之前还真没注意过这点。）
+
+委托（实例）也可以通过匿名函数来创建。匿名函数指的就是那些在代码中“就地创建”方法（译注：还叫不叫“方法”值得商榷）。匿名函数可以“看见”（译注：即访问）包围着它的方法的局部变量。因此，前面的例子完全可以通过省略`Mltiplier`类来使代码变得简洁：（译注：严格来说，下面的代码中不是一个匿名函数，而是一个Lambda表达式。看来C#官方已经用Lambda表达式取代了匿名函数的概念。）
+
+```csharp
+double[] doubles =  Apply(a, (double x) => x * 2.0);
+```
+
+委托的一个有趣且十分有用的性质是——委托并不关心（其实也不知道）被其引用着的方法是哪个类的成员，委托唯一关心的就是被引用的方法在参数和返回值类型上与自己是否一致。（译注：这有啥有趣的……喝高了写的？）
 
 ## Attributes
 
