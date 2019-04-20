@@ -3111,7 +3111,7 @@ double[] doubles =  Apply(a, (double x) => x * 2.0);
 
 委托的一个有趣且十分有用的性质是——委托并不关心（其实也不知道）被其引用着的方法是哪个类的成员，委托唯一关心的就是被引用的方法在参数和返回值类型上与自己是否一致。（译注：这有啥有趣的……喝高了写的？）
 
-## Attributes
+## Attributes | 特征
 
 Types, members, and other entities in a C# program support modifiers that control certain aspects of their behavior. For example, the accessibility of a method is controlled using the `public`, `protected`, `internal`, and `private` modifiers. C# generalizes this capability such that user-defined types of declarative information can be attached to program entities and retrieved at run-time. Programs specify this additional declarative information by defining and using ***attributes***.
 
@@ -3178,3 +3178,72 @@ class Test
 }
 ```
 When a particular attribute is requested through reflection, the constructor for the attribute class is invoked with the information provided in the program source, and the resulting attribute instance is returned. If additional information was provided through properties, those properties are set to the given values before the attribute instance is returned.
+
+C#的类型、成员和其他多种编程实体都支持使用修饰符来控制其行为的某些方面。例如，可以使用`public`、`protected`、`internal`和`private`修饰符来控制一个方法的可访问性。C#通用化了这种能力，方法是允许用户定义包含声明性信息、可附加在编程实体上并能在运行时可以寻回的类型。程序就是通过定义和使用这种**特征**（attribute）类型来进行指派附加的声明性信息的。（译注：原文写的就不怎么样。）
+
+下面的例子声明了一个名为`HelpAttribute`的特征，用以附加到编程实体上来提供与编程实体相关联的帮助文档链接。
+
+```csharp
+using System;
+
+public class HelpAttribute: Attribute
+{
+    string url;
+    string topic;
+
+    public HelpAttribute(string url) {
+        this.url = url;
+    }
+
+    public string Url {
+        get { return url; }
+    }
+
+    public string Topic {
+        get { return topic; }
+        set { topic = value; }
+    }
+}
+```
+
+所有特征类都（隐式地）派生自由.NET Framework提供的`System.Attribute`基类。使用特征的方法是在被修饰的声明前写上一对方括号，把特征类型的名字写在方括号中，再在特征的名字后面跟上参数。如果一个特征类型的名字以`Attribute`结尾，那么当使用这个特征类型的时候这个作为结尾的`Attribute`部分是可以省略不写的。例如，`HelpAttribute`特征可以像如下这样使用：
+
+```csharp
+[Help("http://msdn.microsoft.com/.../MyClass.htm")]
+public class Widget
+{
+    [Help("http://msdn.microsoft.com/.../MyClass.htm", Topic = "Display")]
+    public void Display(string text) {}
+}
+```
+
+上面的例子将一个`HelpAttribute`附加到了`Widget`类上，将另一个`HelpAttribute`附加到了`Display`方法上。特征类的公开构造器控制着那些在将特征附加到（目标）程序实体上时必须要提供的信息。额外的信息则可通过引用特征类公开的读写属性来提供（比如前例中对`Topic`属性的引用）。
+
+下面的例子展示了如何在运行时使用反射（reflection）寻回（被附加到）给定程序实体上的特征信息。
+
+```csharp
+using System;
+using System.Reflection;
+
+class Test
+{
+    static void ShowHelp(MemberInfo member) {
+        HelpAttribute a = Attribute.GetCustomAttribute(member,
+            typeof(HelpAttribute)) as HelpAttribute;
+        if (a == null) {
+            Console.WriteLine("No help for {0}", member);
+        }
+        else {
+            Console.WriteLine("Help for {0}:", member);
+            Console.WriteLine("  Url={0}, Topic={1}", a.Url, a.Topic);
+        }
+    }
+
+    static void Main() {
+        ShowHelp(typeof(Widget));
+        ShowHelp(typeof(Widget).GetMethod("Display"));
+    }
+}
+```
+
+当通过反射来查询一个指定的特征时，特征类的构造器就会被调用，同时，程序源代码中所提供的信息就会被传入构造器，进而就可以返还一个特征类的实例了。如果有额外的信息被通过属性提供了，那么这些属性会在特征实例被返还之前被赋以给定的值。
