@@ -2,32 +2,6 @@
 
 ## Schedule ASAP
 
-### Nullable Reference Types
-
-- Inferred nullable state from a finally block
-
-  See also https://github.com/dotnet/roslyn/issues/34018
-
-- What is the implied constraint for a type parameter of a partial?
-
-  See also https://github.com/dotnet/csharplang/issues/2450
-  
-- MaybeNullAttribute: see https://github.com/cston/csharplang/blob/MaybeNull/proposals/MaybeNull.md
-
-### Default Interface Methods
-
-- Should we hold off support for base calls until we can get runtime support?
-
-### Pattern-Matching
-
-- Can we make the switch expression target-typed?
-
-  See also https://github.com/dotnet/csharplang/issues/2389
-
-### Async Iterators
-
-- Allowing pattern-based `foreach` and `await foreach` to bind to an extension `GetEnumerator`/`GetAsyncEnumerator` and `MoveNext`/`MoveNextAsync` (Julien/Chris)
-
 ## Schedule when convenient
 
 - Syntax of positional records/primary constructors (Andy)
@@ -39,11 +13,35 @@
 - *Triage milestones*
 - *Design review*
 
-## Apr 17, 2019
+## May 1, 2019
+
+* Nullable attributes - continue discussion
+* Nullable opt-in - do we need to adjust the story?
+
+## Apr 29, 2019
+
+* DIM base calls - push out of C# 8.0 until properly implementable?
+* Async interator cancellation - how to deal with two cancellation tokens?
 
 # C# Language Design Notes for 2019
 
 Overview of meetings and agendas for 2019
+
+## Apr 24, 2019
+
+[C# Language Design Notes for Apr 24, 2019](LDM-2019-04-24.md)
+
+MaybeNull and related nullable reference type attributes
+
+
+## Apr 22, 2019
+
+[C# Language Design Notes for Apr 22, 2019](LDM-2019-04-22.md)
+
+1. Inferred nullable state from a finally block
+2. Implied constraint for a type parameter of a partial?
+3. Target-typed switch expression
+4. DefaultCancellationAttribute and overriding/hiding/interface implementation
 
 ## Apr 15, 2019
 
