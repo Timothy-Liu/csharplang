@@ -88,3 +88,38 @@ class Test
 数组实例的类型永远是数组类型。`System.Array`则是一个不能被实例化的抽象类型，（，它是所有数组类型的基类型）。（译注：这里是在强调`System.Array`类并非数组类型）
 
 由*array_creation_expression*所创建的数组里的元素总是会被初始化为它们的（译注：其实是数组元素类型的）默认值（[默认值](variables.md#default-values)）。
+
+## 访问数组元素
+
+数组元素的访问需要用到形式如`A[I1, I2, ..., In]`的*element_access*表达式（[数组访问](expressions.md#array-access)），其中，`A`是一个数组类型的表达式（译注：即要么是个数组，要么是一个表达式求值之后能得到一个数组），而每个`Ix`都是一个`int`、`uint`、`long`或`ulong`类型（或者可隐式转换成这些类型的）表达式。数组元素访问的结果是一个变量。（译注：当方括号中的`Ix`多于一个时，是在访问多维数组。）
+
+数组的元素可使用`foreach`语句来进行枚举（[`foreach`语句](statements.md#the-foreach-statement)）。
+
+## 数组的成员
+
+所有数组类型都继承了由`System.Array`类型所声明的成员。
+
+## 数组的协变
+
+对于两个引用类型`A`与`B`来说，如果从`A`到`B`能进行隐式引用转换（[隐式引用转换](conversions.md#implicit-reference-conversions)）或显式引用转换（[显式引用转换](conversions.md#explicit-reference-conversions)），那么，从数组类型`A[R]`到数组类型`B[R]`也能够发生同样的转换，这里的`R`是任意给定的*rank_specifier*（但两个数组的`R`必须一致）。这样的关系称为**数组的协变**。数组的协变一定程度上意味着一个`A[R]`数组类型的值有可能实际上是一个对数组类型`B[R]`的实例的引用。（译注：争议！引用类型的值到底是不是对象？）
+
+因为数组协变的存在，对引用类型数组元素赋值的时候会有一个运行期的检查，用以保证向数组元素赋予的值的确是被允许的类型（[简单赋值](expressions.md#simple-assignment)）。例如：
+```csharp
+class Test
+{
+    static void Fill(object[] array, int index, int count, object value) {
+        for (int i = index; i < index + count; i++) array[i] = value;
+    }
+
+    static void Main() {
+        string[] strings = new string[100];
+        Fill(strings, 0, 100, "Undefined");
+        Fill(strings, 0, 10, null);
+        Fill(strings, 90, 10, 0);
+    }
+}
+```
+
+`Fill`方法中对`array[i]`的赋值隐式地包含了一个运行期的（类型）检查，这个检查保证了被`value`所引用着的对象要么是`null`要么是一个与`array`数组实际元素类型兼容的对象。在`Main`方法中，前两个对`Fill`的调用会是成功的，但在第三个调中，一执行对`array[i]`的赋值马上就会抛出`System.ArrayTypeMismatchException`异常。原因是被装箱的`int`不能被存储进一个`string`数组中。
+
+*value_type*数组不会发生数组协变。例如，能允许`int[]`像被`object[]`一样对待的转换是不存在的。（译注：`int`与`long`兼容，那么`int[]`实例是否可以被`long[]`变量引用？）
