@@ -123,3 +123,39 @@ class Test
 `Fill`方法中对`array[i]`的赋值隐式地包含了一个运行期的（类型）检查，这个检查保证了被`value`所引用着的对象要么是`null`要么是一个与`array`数组实际元素类型兼容的对象。在`Main`方法中，前两个对`Fill`的调用会是成功的，但在第三个调中，一执行对`array[i]`的赋值马上就会抛出`System.ArrayTypeMismatchException`异常。原因是被装箱的`int`不能被存储进一个`string`数组中。
 
 *value_type*数组不会发生数组协变。例如，能允许`int[]`像被`object[]`一样对待的转换是不存在的。（译注：`int`与`long`兼容，那么`int[]`实例是否可以被`long[]`变量引用？）
+
+## 数组初始化器
+
+在字段声明（[字段](classes.md#fields)）、局部变量声明（[局部变量声明](statements.md#local-variable-declarations)）、和数组创建表达式（[数组创建表达式](expressions.md#array-creation-expressions)）中，可以指定数组初始化器。
+
+```antlr
+array_initializer
+    : '{' variable_initializer_list? '}'
+    | '{' variable_initializer_list ',' '}'
+    ;
+
+variable_initializer_list
+    : variable_initializer (',' variable_initializer)*
+    ;
+
+variable_initializer
+    : expression
+    | array_initializer
+    ;
+```
+
+数组初始化器是在一对花括号（`{`和`}`）中包含一组由逗号（`,`）分隔的变量初始化器。每个变量初始化器都是一个表达式，或者是一个嵌套的数组初始化器（当被初始化的是一个多维数组的时候）。
+
+使用了数组初始化器的上下文能够决定被初始化的数组的类型。在数组创建表达式中，数组的类型要么紧挨着放在数组初始化器前面，要么由数组初始化器中的表达式推断出来。在字段和变量声明中，数组的类型就是被用来声明字段和变量的类型。当数组初始化器被用在字段或变量声明里时，例如：
+```csharp
+int[] a = {0, 2, 4, 6, 8};
+```
+其实就是下面这个等价的数组创建表达式的简写：
+```csharp
+int[] a = new int[] {0, 2, 4, 6, 8};
+```
+
+对于一个一维数组而言，它的数组初始化器必需由一系表达式构成，这些表达式的类型必需与数组的元素类型兼容。这些表达式从索引为零的元素开始，以上升的顺序来初始化数组的元素。初始化器中表达式的个数决定了被创建的数组实例的长度。例如，前面例子中的数组初始化器创建的`int[]`实例长度为5，并且将数组中的元素初始化为了如下的值：
+```csharp
+a[0] = 0; a[1] = 2; a[2] = 4; a[3] = 6; a[4] = 8;
+```
